@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+
+Lengthy Email Reader by ornsio
+v1.1
+
+-->
+
+    <head>
+        <title>Lengthy Email Reader</title>
+
+        <!--
+        Autosize 3.0.4
+        license: MIT (http://www.opensource.org/licenses/mit-license.php)
+        http://www.jacklmoore.com/autosize
+        -->
+        <script type="text/javascript" src="js/autosize.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        
+        var voices = [];
+        var voiceLoadAttempts = 0;
+        
+        // I could not get the Chrome voices to load successfully in an onload event for whatever reason, and the loading of them
+        // is really buggy; you have to call the getVoices(); function twice, and it can't be in rapid succession (via for loop) or
+        // it still doesn't work
+        function loadVoices() {
+            console.log( "Voice load attempt #"+(voiceLoadAttempts+1) );
+            voices = window.speechSynthesis.getVoices();
+
+            if ( voices.length < 1 && voiceLoadAttempts < 5 ) {
+                voiceLoadAttempts++;
+                setTimeout( loadVoices, 1000 );
+            }
+        }
+
+
+        /* ****************************************************************************************************************
+        * Chunkify
+        * Google Chrome Speech Synthesis Chunking Pattern
+        * Fixes inconsistencies with speaking long texts in speechUtterance objects 
+        * Licensed under the MIT License
+        *
+        * Peter Woolley and Brett Zamir
+        * https://gist.github.com/woollsta/2d146f13878a301b36d7#file-chunkify-js
+        * https://stackoverflow.com/questions/21947730/chrome-speech-synthesis-with-longer-texts
+        * 
+        * Significant changes made by ornsio
+        */
+        
+        var speechUtteranceChunker = function (text, settings, callback) {
+            settings = settings || {};
+            var newUtt;
+            var txt = (settings && settings.offset !== undefined ? text.substring(settings.offset) : text);
+            if (settings.useVoice && settings.useVoice.voiceURI === 'native') { // Not part of the spec
+                newUtt = new SpeechSynthesisUtterance();
+                newUtt.text = txt;
+                newUtt.addEventListener('end', function () {
+                    if (speechUtteranceChunker.cancel) {
+                        speechUtteranceChunker.cancel = false;
+                    }
+                    if (callback !== undefined) {
+                        callback();
+                    }
+                });
+            }
+            else {
+                var chunkLength = (settings && settings.chunkLength) || 160;
+                var pattRegex = new RegExp('^((?![.!?\\n])[\\s\\S]){1,' + chunkLength + '}[.!?\\n\\s]+|^[\\s\\S]{' + Math.floor(chunkLength / 2) + ',' + chunkLength + '}[.!?,]+|^[\\s\\S]{1,' + chunkLength + '}$|^[\\s\\S]{1,' + chunkLength + '} ');
+                var chunkArr = txt.match(pattRegex);
+        
+                if (chunkArr[0] === undefined || chunkArr[0].length <= 2) {
+                    //call once all text has been spoken...
+                    if (callback !== undefined) {
+                        callback();
+                    }
+                    return;
+                }
+                var chunk = chunkArr[0];
+                newUtt = new SpeechSynthesisUtterance(chunk);
+                
+                //// This seems to not work, at least in Chrome; have to set properties manually ////
+                // var x;
+                // for (x in utt) {
+                //     if (utt.hasOwnProperty(x) && x !== 'text') {
+                //         newUtt[x] = utt[x];
+                //     }
+                // }
+                /////////////////////////////////////////////////////////////////////////////////////
+
+                newUtt.addEventListener('end', function () {
+                    if (speechUtteranceChunker.cancel) {
+                        speechUtteranceChunker.cancel = false;
+                        return;
+                    }
+                    settings.offset = settings.offset || 0;
+
+                    //// Changed by me to fix punctuation getting repeated at the beginning ////
+                    //// of the next chunk and sometimes pronounced by the speech synthesis ////
+                    //settings.offset += chunk.length - 1;
+                    settings.offset += chunk.length;
+                    ////////////////////////////////////////////////////////////////////////////
+
+                    speechUtteranceChunker(text, settings, callback);
+                });
+            }
+
+            //// Set utterance properties manually ////
+            if ( settings ) {
+                if ( settings.useVoice ) {
+                    newUtt.voice = settings.useVoice;
+                }
+
+                if ( settings.rate ) {
+                    newUtt.rate = settings.rate;
+                }
+            }
+            ///////////////////////////////////////////
+        
+            if (settings.modifier) {
+                settings.modifier(newUtt);
+            }
+            console.log(newUtt); //IMPORTANT!! Do not remove: Logging the object out fixes some onend firing issues.
+            //placing the speak invocation inside a callback fixes ordering and onend issues.
+            setTimeout(function () {
+                speechSynthesis.speak(newUtt);
+            }, 0);
+        };
+        /* ************************************************************************************************************* */
+
+
+        function readText( text, callback, voice ) {
+            console.log( { FullText: text } );
+            speechUtteranceChunker( text, { useVoice: voice, rate: 0.9 }, callback );
+
+        }
+
+        function readUserText( voiceIndex = -1 ) {
+            var voice = false;
+            if ( voiceIndex >= 0 && voices.length ) {
+                voice = voices[ voiceIndex ];
+            }
+            readText( document.getElementById( 'userText' ).value, () => {}, voice );
+        }
+
+        </script>
+
+        <style>
+            body {
+                background-color: #111122;
+                color: #ffffff;
+                font-size: 16px;
+                font-family: sans-serif;
+            }
+
+            textarea {
+                background-color: #000000;
+                color: #bbbbbb;
+            }
+
+            .content {
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 200px;
+                text-align: center;
+            }
+
+            #title {
+                font-size: 24px;
+            }
+
+            .instructions {
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+            
+            button {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 25px;
+            }
+            
+            #userText {
+                margin-top: 30px;
+                width: 750px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <div id="title">Lengthy Email Reader</div>
+            <div class="instructions">Paste the text you want read below, and then click "Read!"</div>
+            <button onclick="readUserText( 6 );">Read!</button>
+            <textarea id="userText"></textarea>
+            <div class="instructions">To enhance the mood, click Play on the embedded Spotify player below!<br />(Be sure to log into Spotify with your browser first!)</div>
+            <iframe src="https://open.spotify.com/embed/playlist/4mBlZDaqwnqv0PFDu6pXXr?theme=0" width="300" height="80" frameBorder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
+    </body>
+
+    <script type="text/javascript">
+        loadVoices();
+        autosize( document.getElementById( 'userText' ) );
+    </script>
+</html>

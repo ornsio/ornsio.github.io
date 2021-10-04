@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+
+Dad Joke of the Day by ornsio
+v2.1
+
+Attribution for sound files:
+Author  : lonemonk ( https://freesound.org/people/lonemonk/ )
+License : http://creativecommons.org/licenses/by/3.0/
+.
+Converted to .mp3 format using https://www.freeconvert.com/wav-to-mp3
+
+-->
+
+    <head>
+        <title>Dad Joke of the Day</title>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+        var preview = { id : '', joke : '' };
+        var voices = [];
+        var voiceLoadAttempts = 0;
+        var img1;
+        var img2;
+        var requestAttempts = 0; // track consecutive failed joke requests due to encountering a duplicate; don't want to accidentally cause a DOS attack on the icanhazdadjoke.com API ;-)
+        
+        var jokeLog = JSON.parse( localStorage.getItem( 'jokeLog' ) );
+        if ( !jokeLog ) {
+            jokeLog = {};
+        }
+
+        function requestJoke( successCallback ) {
+            $.ajax({
+                // see https://icanhazdadjoke.com/api for documentation
+                url : "https://icanhazdadjoke.com/",
+                dataType : "json",
+                headers : {
+                    Accept : "application/json"
+                    //// icanhazdadjoke.com requests that a "User-Agent" header be set when invoking their API, however I couldn't get either of
+                    //// these to work.  For the first, Chrome refuses to set the header, but the request still works.  For the second, I get this:
+                    //// Access to XMLHttpRequest at 'https://icanhazdadjoke.com/' from origin 'null' has been blocked by CORS policy: Request header field x-user-agent is not allowed by Access-Control-Allow-Headers in preflight response.
+                    //// (Both of these were when testing by opening the .html file locally.)
+                    //// If anyone has a way to properly send this header as the site requests, I'm open to a PR :-)
+                    // "User-Agent" : "Dad Joke of the Day (https://ornsio.github.io/dad/)",
+                    // "X-User-Agent" : "Dad Joke of the Day (https://ornsio.github.io/dad/)"
+                },
+                success: function( result ) {
+                    if ( result.status == 200 ) {
+                        // If we already got this joke, request another
+                        if ( jokeLog[ result.id ] == true ) {
+                            requestAttempts++;
+                            if ( requestAttempts > 9 ) {
+                                resetLog( true );
+                                requestAttempts = 0;
+                                console.log( '10th consecutive duplicate joke encountered; jokeLog reset' );
+                            }
+                            else {
+                                console.log( 'Duplicate joke encountered; requesting another' );
+                            }
+                            requestJoke( successCallback );
+                        }
+                        else {
+                            requestAttempts = 0;
+                            successCallback( result );
+                        }
+                    }
+                    else {
+                        alert( "Dad Joke API Error; Response: " + result.status );
+                    }
+                }
+            });
+        }
+
+        function getJoke( getPreview = false ) {
+            if ( getPreview ) {
+                requestJoke( function( result ) {
+                    preview.id = result.id;
+                    preview.joke = result.joke;
+                    alert( preview.joke );
+                    jokeLog[ preview.id ] = true;
+                    localStorage.setItem( 'jokeLog', JSON.stringify( jokeLog ) );
+                });
+            }
+            else {
+                if ( preview.joke != '' ) {
+                    $( "#joke" ).text( preview.joke );
+                    readText( 1, preview.joke, playLaugh, 5 );
+                    preview.id = '';
+                    preview.joke = '';
+                }
+                else {
+                    $( "#joke" ).text( 'loading...' );
+                    requestJoke( function ( result ) {
+                        $( "#joke" ).text( result.joke );
+                        readText( 1, result.joke, playLaugh, 5 );
+                        jokeLog[ result.id ] = true;
+                        localStorage.setItem( 'jokeLog', JSON.stringify( jokeLog ) );
+                    });
+                }
+            }
+        };
+
+        function randomIntInclusive( min, max ) {
+            return Math.floor( Math.random() * ( ( max - min ) + 1 ) + min )
+        }
+
+        // I could not get the Chrome voices to load successfully in an onload event for whatever reason, and the loading of them
+        // is really buggy; you have to call the getVoices(); function twice, and it can't be in rapid succession (via for loop) or
+        // it still doesn't work
+        function loadVoices() {
+            voices = window.speechSynthesis.getVoices();
+
+            if ( voices.length < 1 && voiceLoadAttempts < 5 ) {
+                voiceLoadAttempts++;
+                setTimeout( loadVoices, 1000 );
+            }
+        }
+
+        function readText( reader, text, callback, voiceIndex = -1 ) {
+            var msg = new SpeechSynthesisUtterance();
+            msg.text = text;
+            msg.rate = 0.9;
+            if ( callback ) {
+                if ( reader == 0 ) {
+                    msg.onend = function( event ) { silence1(); callback(); };
+                }
+                if ( reader == 1 ) {
+                    msg.onend = function( event ) { silence2(); callback(); };
+                }
+            }
+            if ( voiceIndex >= 0 && voices.length ) {
+                msg.voice = voices[ voiceIndex ];
+            }
+            window.speechSynthesis.speak( msg );
+            if ( reader == 0 ) {
+                setTimeout( speak1, 200 );
+            }
+            if ( reader == 1 ) {
+                setTimeout( speak2, 200 );
+            }
+        }
+
+        function playLaugh() {
+            var audioId = 'a' + randomIntInclusive( 1, 2 );
+            document.getElementById( audioId ).play();
+            if ( audioId == 'a1' ) {
+                setTimeout( crowdBegone, 14000 );
+            }
+            if ( audioId == 'a2' ) {
+                setTimeout( crowdBegone, 10000 );
+            }
+            crowdAppear();
+        }
+
+        function buttonClick() {
+            if ( img1 === undefined ) {
+                initJokers();
+            }
+            readText( 0, "Commence hilarity!", getJoke, 6 );
+        }
+
+        function initJokers() {
+            img1 = document.getElementById( 'img1' );
+            img2 = document.getElementById( 'img2' );
+            silence1();
+            silence2();
+        }
+
+        function speak1() {
+            img1.style.backgroundImage = "url('images/talky-man.gif')";
+        }
+
+        function speak2() {
+            img2.style.backgroundImage = "url('images/talky-woman.gif')";
+        }
+
+        function silence1() {
+            img1.style.backgroundImage = "url('images/man.gif')";
+        }
+
+        function silence2() {
+            img2.style.backgroundImage = "url('images/woman.gif')";
+        }
+
+        function crowdAppear() {
+            $('.crowdMan, .crowdWoman').toggle( true );
+        }
+
+        function crowdBegone() {
+            $('.crowdMan, .crowdWoman').toggle( false );
+        }
+
+        function resetLog( skipConf = false ) {
+            jokeLogJSON = JSON.stringify( jokeLog );
+            
+            if ( jokeLogJSON != '{}' ) {
+                if ( skipConf || confirm( 'Reset joke log?' ) ) {
+                    console.log( "jokeLog pre reset :" );
+                    console.log( jokeLog );
+                    jokeLog = {};
+                    localStorage.setItem( 'jokeLog', JSON.stringify( jokeLog ) );
+                    console.log( "jokeLog post reset :" );
+                    console.log( jokeLog );
+                }
+            }
+        }
+
+        </script>
+
+        <style>
+            body {
+                background-color: #ffffff;
+                color: #000000;
+                font-size: 16px;
+                font-family: sans-serif;
+            }
+
+            .content {
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 350px;
+                text-align: center;
+            }
+
+            #title {
+                font-size: 24px;
+            }
+
+            button {
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 20px;
+            }
+
+            #joke {
+                margin-top: 40px;
+                font-size: 32px;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            #resetLog {
+                position: fixed;
+                top: 0px;
+                left: 0px;
+                width: 150px;
+                height: 150px;
+                margin: 0px 0px 0px 0px;
+                padding: 0px 0px 0px 0px;
+            }
+
+            #img1 {
+                position: fixed;
+                bottom: 0px;
+                left: 0px;
+                width: 415px;
+                height: 545px;
+                margin: 0px;
+                padding: 0px;
+            }
+
+            #img2 {
+                position: fixed;
+                bottom: 0px;
+                right: 0px;
+                width: 320px;
+                height: 590px;
+                margin: 0px;
+                padding: 0px;
+            }
+
+            .crowdWoman {
+                position: fixed;
+                width: 80px;
+                height: 148px;
+                margin: 0px;
+                padding: 0px;
+                display: none;
+            }
+
+            .crowdMan {
+                position: fixed;
+                width: 104px;
+                height: 137px;
+                margin: 0px;
+                padding: 0px;
+                display: none;
+            }
+
+            .wl {
+                background-image: url('images/talky-woman-small.gif');
+            }
+
+            .ml {
+                background-image: url('images/talky-man-small.gif');
+            }
+
+            .wr {
+                background-image: url('images/talky-woman-smallR.gif');
+            }
+
+            .mr {
+                background-image: url('images/talky-man-smallR.gif');
+            }
+
+            /* Left Side */
+            #c1 {
+                top: 20px;
+                left: 20px;
+            }
+            #c2 {
+                top: 190px;
+                left: 60px;
+            }
+            #c3 {
+                top: 110px;
+                left: 130px;
+            }
+            #c4 {
+                top: 170px;
+                left: 220px;
+            }
+            #c5 {
+                top: 10px;
+                left: 200px;
+            }
+            #c6 {
+                top: 40px;
+                left: 310px;
+            }
+            #c7 {
+                top: 90px;
+                left: 410px;
+            }
+            #c8 {
+                top: 200px;
+                left: 330px;
+            }
+            #c9 {
+                top: 300px;
+                left: 440px;
+            }
+            #c10 {
+                top: 5px;
+                left: 520px;
+            }
+            #c11 {
+                top: 190px;
+                left: 540px;
+            }
+            #c12 {
+                top: 75px;
+                left: 630px;
+            }
+
+            /* Right Side */
+            #c13 {
+                top: 20px;
+                right: 20px;
+            }
+            #c14 {
+                top: 190px;
+                right: 60px;
+            }
+            #c15 {
+                top: 110px;
+                right: 130px;
+            }
+            #c16 {
+                top: 170px;
+                right: 220px;
+            }
+            #c17 {
+                top: 10px;
+                right: 200px;
+            }
+            #c18 {
+                top: 40px;
+                right: 310px;
+            }
+            #c19 {
+                top: 90px;
+                right: 410px;
+            }
+            #c20 {
+                top: 200px;
+                right: 330px;
+            }
+            #c21 {
+                top: 300px;
+                right: 440px;
+            }
+            #c22 {
+                top: 5px;
+                right: 520px;
+            }
+            #c23 {
+                top: 190px;
+                right: 540px;
+            }
+            #c24 {
+                top: 75px;
+                right: 630px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="content">
+            <div id="title">Dad <span onclick="getJoke( true );">Joke</span> of the Day</div>
+            
+            <button onclick="buttonClick();">Commence Hilarity!</button>
+
+            <div id="joke"></div>
+
+            <div id="img1"></div>
+            <div id="img2"></div>
+
+            <div id="c1" class="crowdMan ml"></div>
+            <div id="c2" class="crowdWoman wl"></div>
+            <div id="c3" class="crowdWoman wl"></div>
+            <div id="c4" class="crowdMan ml"></div>
+            <div id="c5" class="crowdMan ml"></div>
+            <div id="c6" class="crowdWoman wl"></div>
+            <div id="c7" class="crowdMan ml"></div>
+            <div id="c8" class="crowdWoman wl"></div>
+            <div id="c9" class="crowdMan ml"></div>
+            <div id="c10" class="crowdWoman wl"></div>
+            <div id="c11" class="crowdMan ml"></div>
+            <div id="c12" class="crowdWoman wl"></div>
+
+            <div id="c13" class="crowdMan mr"></div>
+            <div id="c14" class="crowdWoman wr"></div>
+            <div id="c15" class="crowdWoman wr"></div>
+            <div id="c16" class="crowdMan mr"></div>
+            <div id="c17" class="crowdMan mr"></div>
+            <div id="c18" class="crowdWoman wr"></div>
+            <div id="c19" class="crowdMan mr"></div>
+            <div id="c20" class="crowdWoman wr"></div>
+            <div id="c21" class="crowdMan mr"></div>
+            <div id="c22" class="crowdWoman wr"></div>
+            <div id="c23" class="crowdMan mr"></div>
+            <div id="c24" class="crowdWoman wr"></div>
+        </div>
+        <audio id="a1">
+            <source src="audio/laughter-only.mp3" type="audio/mpeg">
+        </audio>
+        <audio id="a2">
+            <source src="audio/laughter-and-clapter.mp3" type="audio/mpeg">
+        </audio>
+        <div id="resetLog" onclick="resetLog();"></div>
+    </body>
+
+    <script type="text/javascript">
+        loadVoices();
+        /////////////
+        //initJokers();
+        //crowdAppear();
+    </script>
+</html>
