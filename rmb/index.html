@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+
+<!--
+
+Remote Meeting Beautifier by ornsio
+v1.5
+Copyright (c) 2021, Kristopher Willmert (a.k.a "ornsio")
+Licensed under the GNU General Public License version 3
+(See https://ornsio.github.io/LICENSE.txt)
+
+-->
+
+    <head>
+        <title>Remote Meeting Beautifiier</title>
+        <link rel="icon" type="image/png" href="../favicon.png" />
+
+        <script type="text/javascript">
+        var index;
+        var colors = [ "#000000", "#cc8833", "#aa6611", "#884411", "#22ff33", "#2244ff", "#ff0000" ];
+
+        var rotating = false;
+        var cycle = 1;
+        var rotateInterval = 100;
+        var color1R = 0x0;
+        var color1G = 0x0;
+        var color1B = 0x0;
+        var color2R = 0x0;
+        var color2G = 0x0;
+        var color2B = 0x0;
+        var diffR = 0x0;
+        var diffG = 0x0;
+        var diffB = 0x0;
+        var addR = 0x0;
+        var addG = 0x0;
+        var addB = 0x0;
+        var currentR = color1R;
+        var currentG = color1G;
+        var currentB = color1B;
+
+        function cycleColor() {
+            if ( index === undefined ) {
+                document.getElementById( 'hideOnBeautify' ).style.display = 'none';
+                index = 0;
+            }
+            index++;
+            index = index % colors.length;
+            setColor( colors[index] );
+        }
+
+        function setColor( colorString ) {
+            document.getElementsByTagName("BODY")[0].style.backgroundColor = colorString;
+        }
+
+        function rotateColors() {
+            if ( rotating ) {
+                currentR += addR;
+                currentG += addG;
+                currentB += addB;
+
+                if ( cycle == 1 ) {
+                    if ( Math.abs( color2R - currentR ) <= Math.abs( addR / 2 )
+                        && Math.abs( color2G - currentG ) <= Math.abs( addG / 2 )
+                        && Math.abs( color2B - currentB ) <= Math.abs( addB / 2 ) ) {
+                            
+                        currentR = color2R;
+                        currentG = color2G;
+                        currentB = color2B;
+                        addR *= -1;
+                        addG *= -1;
+                        addB *= -1;
+                        cycle = 2;
+                    }
+                }
+                else {
+                    if ( Math.abs( color1R - currentR ) <= Math.abs( addR / 2 )
+                        && Math.abs( color1G - currentG ) <= Math.abs( addG / 2 )
+                        && Math.abs( color1B - currentB ) <= Math.abs( addB / 2 ) ) {
+
+                        currentR = color1R;
+                        currentG = color1G;
+                        currentB = color1B;
+                        addR *= -1;
+                        addG *= -1;
+                        addB *= -1;
+                        cycle = 1;
+                    }
+                }
+
+                setColor( getCurrentColor() );
+                setTimeout( rotateColors, rotateInterval );
+            }
+        }
+
+        function toggleRotate() {
+            if ( rotating ) {
+                document.getElementById( "nuts" ).innerText = "CRAZY GO NUTS!!"
+                rotating = false;
+                setColor( colors[index] );
+            }
+            else {
+                document.getElementById( 'hideOnBeautify' ).style.display = 'none';
+                document.getElementById( "nuts" ).innerText = "Stop!"
+                rotateInterval = document.getElementById( "interval" ).value;
+                getColorsFromInput();
+                index = 0;
+                rotating = true;
+                cycle = 1;
+                diffR = ( color1R - color2R ) * -1;
+                diffG = ( color1G - color2G ) * -1;
+                diffB = ( color1B - color2B ) * -1;
+                addR = diffR / 20;
+                addG = diffG / 20;
+                addB = diffB / 20;
+                currentR = color1R;
+                currentG = color1G;
+                currentB = color1B;
+                setColor( getCurrentColor() );
+                setTimeout( rotateColors, rotateInterval );
+            }
+        }
+
+        function getCurrentColor() {
+            return '#' + hexToStringRep( currentR ) + hexToStringRep( currentG ) + hexToStringRep( currentB );
+        }
+
+        function getColorsFromInput() {
+            var color1 = document.getElementById( "color1" ).value;
+            var color2 = document.getElementById( "color2" ).value;
+
+            if ( color1.substring( 0, 1 ) == "#" ) color1 = color1.substring( 1 );
+            if ( color2.substring( 0, 1 ) == "#" ) color2 = color2.substring( 1 );
+
+            if ( color1.length == 3 ) {
+                color1R = parseInt( "0x" + color1.substring( 0, 1 ) + "0" );
+                color1G = parseInt( "0x" + color1.substring( 1, 2 ) + "0" );
+                color1B = parseInt( "0x" + color1.substring( 2 ) + "0" );
+            }
+            else {
+                color1R = parseInt( "0x" + color1.substring( 0, 2 ) );
+                color1G = parseInt( "0x" + color1.substring( 2, 4 ) );
+                color1B = parseInt( "0x" + color1.substring( 4 ) );
+            }
+
+            if ( color2.length == 3 ) {
+                color2R = parseInt( "0x" + color2.substring( 0, 1 ) + "0" );
+                color2G = parseInt( "0x" + color2.substring( 1, 2 ) + "0" );
+                color2B = parseInt( "0x" + color2.substring( 2 ) + "0" );
+            }
+            else {
+                color2R = parseInt( "0x" + color2.substring( 0, 2 ) );
+                color2G = parseInt( "0x" + color2.substring( 2, 4 ) );
+                color2B = parseInt( "0x" + color2.substring( 4 ) );
+            }
+        }
+
+        function hexToStringRep( hex ) {
+            var leftChar = hexCharIntStringToHexString( Math.trunc( hex / 16 ).toString() );
+            var rightChar = hexCharIntStringToHexString( Math.trunc( hex - ( parseInt( "0x" + leftChar ) * 16 ) ).toString() );
+            return leftChar + rightChar;
+        }
+
+        function hexCharIntStringToHexString( intString ) {
+            switch ( intString ) {
+                case "10":
+                    return "a";
+                case "11":
+                    return "b";
+                case "12":
+                    return "c";
+                case "13":
+                    return "d";
+                case "14":
+                    return "e";
+                case "15":
+                    return "f";
+                default:
+                    return intString;
+            }
+        }
+
+        function easterEgg() {
+            document.getElementById( "easterEgg" ).classList.toggle( "hidden" );
+        }
+
+        function colorPreview( inputNum ) {
+            if ( inputNum == 1 ) {
+                var color1 = document.getElementById( "color1" ).value;
+                if ( color1.substring( 0, 1 ) != "#" ) color1 = "#" + color1;
+                if ( color1.match( /\#([0-9a-f]{3}|[0-9a-f]{6})$/i ) == null ) {
+                    color1 = "#000000";
+                }
+                document.getElementById( "colorbox1" ).style.backgroundColor = color1;
+            }
+            else if ( inputNum == 2 ) {
+                var color2 = document.getElementById( "color2" ).value;
+                if ( color2.substring( 0, 1 ) != "#" ) color2 = "#" + color2;
+                if ( color2.match( /\#([0-9a-f]{3}|[0-9a-f]{6})$/i ) == null ) {
+                    color2 = "#000000";
+                }
+                document.getElementById( "colorbox2" ).style.backgroundColor = color2;
+            }
+        }
+        </script>
+
+        <style>
+            body {
+                background-color: #000000;
+                color: #ffffff;
+                font-size: 16px;
+                font-family: sans-serif;
+                padding: 40px 0px 0px 40px;
+            }
+
+            label {
+                float: left;
+                clear: left;
+                margin-right: 8px;
+                margin-bottom: 18px;
+            }
+
+            input {
+                float: left;
+            }
+
+            button {
+                float: left;
+                clear: both;
+                margin-bottom: 80px;
+            }
+
+            b {
+                font-style: italic;
+                font-weight: bold;
+            }
+
+            .colorbox {
+                float: left;
+                margin-left: 20px;
+                height: 30px;
+                width: 30px;
+                border: 1px solid #ffffff;
+            }
+
+            .hidden {
+                display: none;
+            }
+
+            #bad, #good {
+                width: 464px;
+                height: 261px;
+                background-repeat: no-repeat;
+                margin-bottom: 60px;
+            }
+
+            #bad {
+                background-image: url('./images/rm-bad.png');
+            }
+
+            #good {
+                background-image: url('./images/rm-good.png');
+            }
+        </style>
+    </head>
+    <body onload="colorPreview( 1 ); colorPreview( 2 );">
+        <div id="hideOnBeautify">
+            <p>Worried about the white content on your monitor giving you that washed-out, ghostly appearance in your remote meetings?</p>
+            <div id="bad"></div>
+            <p>Worry no more! The solution is here!!</p>
+            <div id="good"></div>
+        </div>
+        <p>INSTRUCTIONS:</p>
+        <ol>
+            <li>Maximize your browser window on your monitor to get the full effect.</li>
+            <li>Click the <b>Beautify!</b> button below to <span onclick="easterEgg();" style="cursor: pointer;">cycle</span> through the available Remote Meeting Beautification colors and find your favorite.</li>
+            <li>Hop on your next remote meeting, turn that camera on, and flaunt your new-found beauty with confidence and style!</li>
+        </ol>
+        <button onclick="cycleColor();">Beautify!</button>
+        <div id="easterEgg" class="hidden">
+            <label>Rotate Interval:</label><input id="interval" type="text" value="100" />
+            <label>Color 1:</label><input id="color1" type="text" value="#000000" onkeyup="colorPreview( 1 );" /><div id="colorbox1" class="colorbox"></div>
+            <label>Color 2:</label><input id="color2" type="text" value="#326f41" onkeyup="colorPreview( 2 );" /><div id="colorbox2" class="colorbox"></div>
+            <button id="nuts" onclick="toggleRotate();">CRAZY GO NUTS!</button>
+        </div>
+    </body>
+</html>
