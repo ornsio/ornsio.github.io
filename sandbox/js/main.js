@@ -11,7 +11,10 @@ var searchWaitInProgress = false;
 var searchInProgress = false;
 var waitingOn = 0;
 
-var worker;
+var workerA;
+var workerB;
+var workerC;
+var numWorkers = 3;
 
 window.addEventListener( 'load', function() {
     if ( !window.Worker ) {
@@ -32,11 +35,15 @@ window.addEventListener( 'load', function() {
         });
 
         // create the 'worker' variable to interact with the worker from the main thread
-        worker = new Worker( 'js/worker.js' );
-        // worker = new FakeWorker( 'js/worker.js' );
+        workerA = new Worker( 'js/worker.js' );
+        workerB = new Worker( 'js/worker.js' );
+        workerC = new Worker( 'js/worker.js' );
+        // workerA = new FakeWorker( 'js/worker.js' );
+        // workerB = new FakeWorker( 'js/worker.js' );
+        // workerC = new FakeWorker( 'js/worker.js' );
         
         // establish logic to handle messages sent from the worker to the main thread
-        worker.onmessage = function( event ) {
+        var workerResponseHandler = function( event ) {
             console.log( 'Worker sent main thread a message : ' + JSON.stringify( event.data ) );
             var row = document.getElementById( event.data.id );
 
@@ -53,7 +60,9 @@ window.addEventListener( 'load', function() {
                 searchBox.disabled = false;
                 searchBox.focus();
             }
-        }
+        };
+
+        workerA.onmessage = workerResponseHandler;
         
         document.getElementById( 'search' ).addEventListener( 'keydown', function( evnt ) {
             if ( !searchInProgress && userTextReady ) {
@@ -102,7 +111,19 @@ function search() {
             var message = { id : line.id.substring( 1 ), text : line.innerText, searchRegEx : matcher };
             console.log( 'Main thread sending worker a message : ' + JSON.stringify( message ) );
             waitingOn++;
-            worker.postMessage( message );
+
+            var whichWorker = i % numWorkers;
+            switch ( whichWorker )
+            {
+                case 1:
+                    workerA.postMessage( message );
+                    break;
+                case 2:
+                    workerB.postMessage( message );
+                    break;
+                default:
+                    workerC.postMessage( message );
+            }
         }
     }
     else {
@@ -174,7 +195,9 @@ class FakeWorkerThread {
     FakeWorkerThread() { }
 
     postMessage( object ) {
-        worker.onmessage( { data : object } );
+        // Note that this cheats and really doesn't use the other fake workers, but since they're
+        // fake and everything is happening in a single thread anyway, that doesn't really matter
+        workerA.onmessage( { data : object } );
     }
 
     

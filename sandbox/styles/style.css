@@ -11,7 +11,7 @@ body {
     max-width: 800px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 70px;
+    margin-top: 20px;
     text-align: center;
 }
 
@@ -34,8 +34,14 @@ button {
 #userText, #search {
     margin-top: 30px;
     width: 750px;
+    max-width: 750px;
+    min-width: 750px;
     background-color: #000000;
     color: #bbbbbb;
+}
+
+#userText {
+    height: 100px;
 }
 
 #search {
