@@ -44,7 +44,7 @@ window.addEventListener( 'load', function() {
         
         // establish logic to handle messages sent from the worker to the main thread
         var workerResponseHandler = function( event ) {
-            console.log( 'Worker sent main thread a message : ' + JSON.stringify( event.data ) );
+            console.log( 'Worker ' + event.data.worker + ' sent main thread a message : ' + JSON.stringify( event.data ) );
             var row = document.getElementById( event.data.id );
 
             if ( event.data.rowMatched ) {
@@ -118,12 +118,15 @@ function search() {
             switch ( whichWorker )
             {
                 case 1:
+                    message.worker = "A";
                     workerA.postMessage( message );
                     break;
                 case 2:
+                    message.worker = "B";
                     workerB.postMessage( message );
                     break;
                 default:
+                    message.worker = "C";
                     workerC.postMessage( message );
             }
         }
@@ -205,11 +208,11 @@ class FakeWorkerThread {
     
     executeThread( event ) {  var postMessage = this.postMessage;
         // The logic below this comment should be the logic that the worker script would perform inside of onmessage = function( event ) { ... } //
-        console.log( 'Worker: Message received from main thread: ' + JSON.stringify( event.data ) );
+        console.log( 'Worker ' + event.data.worker + ' : Message received from main thread: ' + JSON.stringify( event.data ) );
 
         var text    = event.data.text;
         var matcher = event.data.searchRegEx;
-
+    
         var isMatch = false;
         var matchedText = '';
         if ( matcher.test( text ) )
@@ -218,11 +221,12 @@ class FakeWorkerThread {
             matcher.lastIndex = 0;
             matchedText = text.replaceAll( matcher, '<b>$&</b>' );
         }
-
+    
         postMessage({
             id : event.data.id,
             rowMatched : isMatch,
-            text : matchedText
+            text : matchedText,
+            worker : event.data.worker
         });
         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
