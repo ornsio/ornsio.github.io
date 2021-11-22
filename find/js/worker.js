@@ -1,6 +1,6 @@
 // handle messages from the main thread
 onmessage = function( event ) {
-    console.log( 'Worker ' + event.data.worker + ' : Message received from main thread: ' + JSON.stringify( event.data ) );
+    // console.log( 'Worker ' + event.data.worker + ' : Message received from main thread: ' + JSON.stringify( event.data ) );
 
     var text    = event.data.text;
     var matcher = event.data.searchRegEx;

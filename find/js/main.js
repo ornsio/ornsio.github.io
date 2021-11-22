@@ -19,10 +19,10 @@ var workerC;
 var numWorkers = 3;
 
 window.addEventListener( 'load', function() {
-    // if ( !window.Worker ) {
-    //     alert( "Your browser doesn't support web workers, so this page won't work for you :-(" );
-    // }
-    // else {
+    if ( !window.Worker ) {
+        alert( "Your browser doesn't support web workers, so this page won't work for you :-(" );
+    }
+    else {
         controls    = document.getElementById( 'controls' );
         userFile    = document.getElementById( 'userFile' );
         userText    = document.getElementById( 'userText' );
@@ -43,12 +43,9 @@ window.addEventListener( 'load', function() {
         userFile.addEventListener( 'change', parseFile );
 
         // Create the worker variables to interact with the worker threads from the main thread
-        // workerA = new Worker( 'js/worker.js' );
-        // workerB = new Worker( 'js/worker.js' );
-        // workerC = new Worker( 'js/worker.js' );
-        workerA = new FakeWorker( 'js/worker.js' );
-        workerB = new FakeWorker( 'js/worker.js' );
-        workerC = new FakeWorker( 'js/worker.js' );
+        workerA = new Worker( 'js/worker.js' );
+        workerB = new Worker( 'js/worker.js' );
+        workerC = new Worker( 'js/worker.js' );
         
         // Establish logic to handle messages sent from the worker threads to the main thread
         var workerResponseHandler = function( event ) {
@@ -86,7 +83,7 @@ window.addEventListener( 'load', function() {
         });
 
         userText.focus();
-    // }
+    }
 });
 
 
@@ -216,55 +213,57 @@ function setResultHeight() {
 
 
 
-// This class mimics web worker functionality without actually being multi-threaded.
-// It is intended to allow web worker code designs to be tested on a local machine.
-class FakeWorker {
-    onmessage;
+// // This class mimics web worker functionality without actually being multi-threaded.
+// // It is intended to allow web worker code designs to be tested on a local machine.
+// class Worker {
+//     onmessage;
 
-    FakeWorker( scriptIn ) {
-        this.script = scriptIn;
-    }
+//     FakeWorker( scriptIn ) {
+//         this.script = scriptIn;
+//     }
 
-    // This function mimics Worker.postMessage() as invoked from the main script
-    postMessage( object ) {
-        var event = { data : object };
-        var thread = new FakeWorkerThread();
-        thread.executeThread( event );
-    }
-}
+//     // This function mimics Worker.postMessage() as invoked from the main script
+//     postMessage( object ) {
+//         var event = { data : object };
+//         var thread = new FakeWorkerThread();
+//         thread.executeThread( event );
+//     }
+// }
 
-class FakeWorkerThread {
-    FakeWorkerThread() { }
+// class FakeWorkerThread {
+//     FakeWorkerThread() { }
 
-    postMessage( object ) {
-        // Note that this cheats and really doesn't use the other fake workers, but since they're
-        // fake and everything is happening in a single thread anyway, that doesn't really matter
-        workerA.onmessage( { data : object } );
-    }
+//     postMessage( object ) {
+//         // Note that this cheats and really doesn't use the other fake workers, but since they're
+//         // fake and everything is happening in a single thread anyway, that doesn't really matter
+//         workerA.onmessage( { data : object } );
+//     }
 
     
-    executeThread( event ) {  var postMessage = this.postMessage;
-        // The logic below this comment should be the logic that the worker script would perform inside of onmessage = function( event ) { ... } //
-        console.log( 'Worker ' + event.data.worker + ' : Message received from main thread: ' + JSON.stringify( event.data ) );
+//     executeThread( event ) {  var postMessage = this.postMessage;
+//         // The logic below this comment should be the logic that the worker script would perform inside of onmessage = function( event ) { ... } //
 
-        var text    = event.data.text;
-        var matcher = event.data.searchRegEx;
+//         // console.log( 'Worker ' + event.data.worker + ' : Message received from main thread: ' + JSON.stringify( event.data ) );
+
+//         var text    = event.data.text;
+//         var matcher = event.data.searchRegEx;
     
-        var isMatch = false;
-        var matchedText = '';
-        if ( matcher.test( text ) )
-        {
-            isMatch = true;
-            matcher.lastIndex = 0;
-            matchedText = text.replaceAll( matcher, '<b>$&</b>' );
-        }
+//         var isMatch = false;
+//         var matchedText = '';
+//         if ( matcher.test( text ) )
+//         {
+//             isMatch = true;
+//             matcher.lastIndex = 0;
+//             matchedText = text.replaceAll( matcher, '<b>$&</b>' );
+//         }
     
-        postMessage({
-            id : event.data.id,
-            rowMatched : isMatch,
-            text : matchedText,
-            worker : event.data.worker
-        });
-        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    }
-}
+//         postMessage({
+//             id : event.data.id,
+//             rowMatched : isMatch,
+//             text : matchedText,
+//             worker : event.data.worker
+//         });
+
+//         ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//     }
+// }
