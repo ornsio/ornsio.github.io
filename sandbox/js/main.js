@@ -14,7 +14,7 @@ var waitingOn = 0;
 var worker;
 
 window.addEventListener( 'load', function() {
-    if ( !window.worker ) {
+    if ( !window.Worker ) {
         alert( "Your browser doesn't support web workers, so this page won't work for you :-(" );
     }
     else {
