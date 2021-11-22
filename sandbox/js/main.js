@@ -63,6 +63,8 @@ window.addEventListener( 'load', function() {
         };
 
         workerA.onmessage = workerResponseHandler;
+        workerB.onmessage = workerResponseHandler;
+        workerC.onmessage = workerResponseHandler;
         
         document.getElementById( 'search' ).addEventListener( 'keydown', function( evnt ) {
             if ( !searchInProgress && userTextReady ) {
