@@ -17,18 +17,18 @@ body {
 
 #title {
     font-size: 24px;
-}
-
-.instructions {
-    margin-top: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 button {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 25px;
+    margin-top: 15px;
+}
+
+#userFile {
+    margin-left: 70px;
 }
 
 #userText, #search {
@@ -41,7 +41,7 @@ button {
 }
 
 #userText {
-    height: 100px;
+    height: 60px;
 }
 
 #search {
@@ -63,6 +63,25 @@ button {
     white-space: nowrap;
     overflow-x: scroll;
     overflow-y: scroll;
+}
+
+.line {
+    overflow-x: visible;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 10px;
+    padding-right: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+}
+
+b {
+    color: #44aaff;
+}
+
+#filtered, #unfiltered {
+    display: none;
+    height: 50vh;
 }
 
 ::-webkit-scrollbar {
@@ -90,27 +109,21 @@ button {
 }
 
 ::-webkit-resizer {
-    /* border: solid 1px #111111; */
-    border-radius: 12px;
-    background-color: rgba( 85, 85, 85, 1 );
-    box-shadow: inset 0 0 6px rgba( 17, 17, 17, 1 );
+    background-position: 5px 5px;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAYAAAAGCAYAAADgzO9IAAAALUlEQVQYV2NkwAKuXLnynxFdHCSoo6PDiCIBEwQphksgC8Il0AXBdmATBNkBADWMHv3ZkWGbAAAAAElFTkSuQmCC);
+    background-repeat: no-repeat;
 }
 
-.line {
-    overflow-x: visible;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    padding-left: 10px;
-    padding-right: 4px;
-    padding-top: 4px;
-    padding-bottom: 4px;
+::placeholder {
+    color: #666666;
+    font-style: italic;
+    opacity: 1;
 }
-
-b {
-    color: #44aaff;
+:-ms-input-placeholder {
+    color: #666666;
+    font-style: italic;
 }
-
-#filtered, #unfiltered {
-    display: none;
-    height: 50vh;
+::-ms-input-placeholder {
+    color: #666666;
+    font-style: italic;
 }

@@ -1,5 +1,7 @@
 var controls;
+var userFile;
 var userText;
+var parseButton;
 var searchBox;
 var unfiltered;
 var filtered;
@@ -17,15 +19,17 @@ var workerC;
 var numWorkers = 3;
 
 window.addEventListener( 'load', function() {
-    if ( !window.Worker ) {
-        alert( "Your browser doesn't support web workers, so this page won't work for you :-(" );
-    }
-    else {
-        controls = document.getElementById( 'controls' );
-        userText = document.getElementById( 'userText' );
-        searchBox = document.getElementById( 'search' );
-        unfiltered = document.getElementById( 'unfiltered' );
-        filtered = document.getElementById( 'filtered' );
+    // if ( !window.Worker ) {
+    //     alert( "Your browser doesn't support web workers, so this page won't work for you :-(" );
+    // }
+    // else {
+        controls    = document.getElementById( 'controls' );
+        userFile    = document.getElementById( 'userFile' );
+        userText    = document.getElementById( 'userText' );
+        parseButton = document.getElementById( 'parseButton' );
+        searchBox   = document.getElementById( 'search' );
+        unfiltered  = document.getElementById( 'unfiltered' );
+        filtered    = document.getElementById( 'filtered' );
 
         setResultHeight();
         window.addEventListener( 'resize', setResultHeight );
@@ -34,15 +38,19 @@ window.addEventListener( 'load', function() {
             attributeFilter: [ "style" ]
         });
 
-        // create the 'worker' variable to interact with the worker from the main thread
-        workerA = new Worker( 'js/worker.js' );
-        workerB = new Worker( 'js/worker.js' );
-        workerC = new Worker( 'js/worker.js' );
-        // workerA = new FakeWorker( 'js/worker.js' );
-        // workerB = new FakeWorker( 'js/worker.js' );
-        // workerC = new FakeWorker( 'js/worker.js' );
+        // Setup listeners etc. for accepting the user's text they want to search
+        parseButton.addEventListener( 'click', parseTextbox );
+        userFile.addEventListener( 'change', parseFile );
+
+        // Create the worker variables to interact with the worker threads from the main thread
+        // workerA = new Worker( 'js/worker.js' );
+        // workerB = new Worker( 'js/worker.js' );
+        // workerC = new Worker( 'js/worker.js' );
+        workerA = new FakeWorker( 'js/worker.js' );
+        workerB = new FakeWorker( 'js/worker.js' );
+        workerC = new FakeWorker( 'js/worker.js' );
         
-        // establish logic to handle messages sent from the worker to the main thread
+        // Establish logic to handle messages sent from the worker threads to the main thread
         var workerResponseHandler = function( event ) {
             console.log( 'Worker ' + event.data.worker + ' sent main thread a message : ' + JSON.stringify( event.data ) );
             var row = document.getElementById( event.data.id );
@@ -61,12 +69,12 @@ window.addEventListener( 'load', function() {
                 searchBox.focus();
             }
         };
-
         workerA.onmessage = workerResponseHandler;
         workerB.onmessage = workerResponseHandler;
         workerC.onmessage = workerResponseHandler;
-        
-        document.getElementById( 'search' ).addEventListener( 'keydown', function( evnt ) {
+
+        // Setup listeners etc. for executing the search
+        searchBox.addEventListener( 'keydown', function( evnt ) {
             if ( !searchInProgress && userTextReady ) {
                 searchDelay = searchDelayDefault;
 
@@ -76,8 +84,63 @@ window.addEventListener( 'load', function() {
                 }
             }
         });
-    }
+
+        userText.focus();
+    // }
 });
+
+
+function parseTextbox()
+{
+    preParse();
+    var textArray = userText.value.split( '\n' )
+    parse( textArray );
+}
+
+function parseFile() {
+    if ( !userFile.disabled ) {
+        preParse();
+
+        const file = userFile.files[0];
+        file.text().then( text => parse( text.split( '\n' ) ) );
+    }
+}
+
+function preParse() {
+    userFile.disabled    = true;
+    userText.disabled    = true;
+    parseButton.disabled = true;
+
+    unfiltered.textContent = '';
+    filtered.textContent = '';
+
+    // Probably need to display some kind of "loading" graphic
+}
+
+function parse( textArray ) {
+    for ( var i = 0; i < textArray.length; i++ )
+    {
+        var line = textArray[i];
+
+        var newLine = document.createElement( 'div' );
+        newLine.innerText = line;
+        newLine.id = 'u' + ( i + 1 );
+        newLine.className = 'line';
+        unfiltered.appendChild( newLine );
+
+        var newLineFiltered = document.createElement( 'div' );
+        // newLineFiltered.innerText = line; // no need to have the text in the filtered section initially
+        newLineFiltered.id = i + 1;
+        newLineFiltered.className = 'line';
+        filtered.appendChild( newLineFiltered );
+    }
+
+    userTextReady = true;
+    searchBox.disabled = false;
+    searchBox.focus();
+    unfiltered.style.display = 'block';
+}
+
 
 function searchCheck() {
     searchDelay--;
@@ -139,40 +202,14 @@ function search() {
     searchInProgress = false;
 }
 
-function parse()
-{
-    userText.disabled = true;
-
-    unfiltered.textContent = '';
-    filtered.textContent = '';
-    var text = userText.value.split( '\n' );
-
-    for ( var i = 0; i < text.length; i++ )
-    {
-        var line = text[i];
-
-        var newLine = document.createElement( 'div' );
-        newLine.innerText = line;
-        newLine.id = 'u' + ( i + 1 );
-        newLine.className = 'line';
-        unfiltered.appendChild( newLine );
-
-        var newLineFiltered = document.createElement( 'div' );
-        // newLineFiltered.innerText = line; // no need to have the text in the filtered section initially
-        newLineFiltered.id = i + 1;
-        newLineFiltered.className = 'line';
-        filtered.appendChild( newLineFiltered );
-    }
-
-    userTextReady = true;
-    unfiltered.style.display = 'block';
-}
-
 function setResultHeight() {
-    var resultHeight = ( window.innerHeight - controls.getBoundingClientRect().height - 200 ) + 'px';
+    var resultHeight = ( window.innerHeight - controls.getBoundingClientRect().height - 130 ) + 'px';
     unfiltered.style.height = resultHeight;
     filtered.style.height = resultHeight;
 }
+
+
+
 
 
 
