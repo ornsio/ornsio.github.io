@@ -1,5 +1,22 @@
 // handle messages from the main thread
 onmessage = function( event ) {
-    console.log( 'Worker: Message received from main thread: ' + event.data );
-    postMessage( 'Hey main thread, I got your message.' );
+    console.log( 'Worker: Message received from main thread: ' + JSON.stringify( event.data ) );
+
+    var text    = event.data.text;
+    var matcher = event.data.searchRegEx;
+
+    var isMatch = false;
+    var matchedText = '';
+    if ( matcher.test( text ) )
+    {
+        isMatch = true;
+        matcher.lastIndex = 0;
+        matchedText = text.replaceAll( matcher, '<b>$&</b>' );
+    }
+
+    postMessage({
+        id : event.data.id,
+        rowMatched : isMatch,
+        text : matchedText
+    });
 }
