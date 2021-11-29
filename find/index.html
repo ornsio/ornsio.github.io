@@ -17,12 +17,16 @@
         <script src="js/main.js"></script>
     </head>
     <body>
+        <button id="toggleInputs">Show Inputs</button>
         <div id="controls">
             <div id="title">Find by Line</div>
-            <input type="file" id="userFile" />
-            <textarea id="userText" placeholder=' Paste the text to search here, and click "Load"; or choose a file above...'></textarea>
-            <button id="parseButton">Load</button>
+            <div id="hideable">
+                <input type="file" id="userFile" />
+                <textarea id="userText" placeholder=' Paste the text to search here, and click "Load"; or choose a file above...'></textarea>
+                <button id="parseButton">Load</button>
+            </div>
             <input id="search" type="text" placeholder=' ...then once your text appears below, type your search here.' disabled />
+            <div id="loading"><div id="loadingImage"></div></div>
         </div>
         <div id="unfiltered" class="content"></div>
         <div id="filtered" class="content"></div>

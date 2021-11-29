@@ -24,15 +24,22 @@ button {
     display: block;
     margin-left: auto;
     margin-right: auto;
+}
+
+#toggleInputs {
+    float: left;
+    margin: 0;
+    margin-left: 25px;
     margin-top: 15px;
+    display: none;
 }
 
 #userFile {
     margin-left: 70px;
+    margin-bottom: 40px;
 }
 
 #userText, #search {
-    margin-top: 30px;
     width: 750px;
     max-width: 750px;
     min-width: 750px;
@@ -42,6 +49,11 @@ button {
 
 #userText {
     height: 60px;
+    margin-bottom: 15px;
+}
+
+#parseButton {
+    margin-bottom: 30px;
 }
 
 #search {
@@ -49,12 +61,40 @@ button {
     border-style: ridge;
 }
 
+#loading {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0;
+    width: 25px;
+    height: 25px;
+}
+
+#loadingImage {
+    border: 4px solid #444444; /* Light grey */
+    border-top: 4px solid #44aaff; /* Blue */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    padding: 0;
+    margin: 0;
+    width: 17px;
+    height: 17px;
+    display: none;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .content {
     text-align: left;
     margin-left: 20px;
-    margin-top: 60px;
+    margin-top: 0px;
     margin-bottom: 20px;
     margin-right: 20px;
+    padding-top: 5px;
     color: #cccccc;
     background-color: #000000;
     border: 1px solid #555555;
@@ -75,6 +115,21 @@ button {
     padding-bottom: 4px;
 }
 
+.lineNum, .lineText {
+    display: inline-block;
+    padding-top: 2px;
+}
+
+.lineNum {
+    background-color: #223366;
+    color: #ffffff;
+    width: 60px;
+    margin-right: 8px;
+    padding-right: 4px;
+    text-align: right;
+    border-radius: 3px;
+}
+
 b {
     color: #44aaff;
 }
@@ -88,6 +143,14 @@ b {
     background-color: #111111;
     width: 13px;
     height: 13px;
+}
+
+::-webkit-scrollbar:horizontal {
+    border-top: 1px solid #2d2d2d;
+}
+
+::-webkit-scrollbar:vertical {
+    border-left: 1px solid #2d2d2d;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -105,7 +168,7 @@ b {
 }
 
 ::-webkit-scrollbar-corner {
-    display: none;
+    background-color: #111111;    
 }
 
 ::-webkit-resizer {
