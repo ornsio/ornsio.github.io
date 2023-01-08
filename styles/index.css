@@ -19,6 +19,7 @@ ul, ol {
 li {
     margin-top: 8px;
     margin-bottom: 0px;
+    text-align: left;
 }
 
 a {
@@ -35,6 +36,10 @@ a:hover {
     margin-right: auto;
     margin-top: 75px;
     text-align: center;
+}
+
+.section {
+    margin-top: 60px;
 }
 
 #title {
