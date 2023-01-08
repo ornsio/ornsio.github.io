@@ -1,0 +1,3 @@
+.main-accordian-always-open::after {
+    background-image: none !important;
+}

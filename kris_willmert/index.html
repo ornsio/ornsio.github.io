@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Kris Willmert</title>
+    <link href="./css/bootstrap-5.2.3/bootstrap.min.css" rel="stylesheet" />
+    <link href="./css/main.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+    <div class="container p-5">
+        <div class="container mt-3">
+            <div class="text-center mb-3">
+                <img class="img-fluid rounded-3" src="./images/MeReal.png" />
+            </div>
+            <h1 class="h1 text-center">Kristopher K. Willmert</h1>
+            <p class="text-center"><a class="text-decoration-none" href="mailto:kkwillmert@gmail.com">kkwillmert@gmail.com</a></p>
+        </div>
+
+        <div class="container mt-5">
+            <h2 class="h2 text-center mb-3">About Me</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-body">
+                        <div class="container">
+                            I am an enthusiastic software developer with over a decade of experience in higher ed. I am skilled at writing, maintaining, and refactoring organized, efficient, and readable code, as well as clearly communicating complex technical concepts to non-technical clients. I love to learn and apply new technologies through both training and hands-on experience. In my personal life, I love to serve and connect with people at my local church, spend time with family, pursue nerdy hobbies, and drink quality coffees.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <h2 class="h2 text-center mb-3">Experience</h2>
+            <div class="accordion" id="experienceAccordian">
+                <div class="accordion-item">
+                    <div class="accordion-header" id="expHeader1">
+                        <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#expContent1" aria-expanded="true" aria-controls="expContent1">
+                            <div class="container w-100 text-uppercase">
+                                <div class="row">
+                                    <div class="col-lg-5 fs-6 text-nowrap">Salesforce Technical Director</div>
+                                    <div class="col-lg-4 fs-6 text-nowrap ms-2 text-muted">Indiana Wesleyan University</div>
+                                    <div class="col-lg-2 fs-6 text-nowrap ms-2">May 2022 - Present</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="expContent1" class="accordion-collapse collapse show" aria-labelledby="expHeader1" data-bs-parent="#experienceAccordian">
+                        <div class="accordion-body">
+                            <ul class="lh-base">
+                                <li>Rapidly addressed multiple data corruption issues caused by uncaught bugs in our third-party-developed IPaaS code immediately after launch, using SOQL to target affected data and Salesforce Dataloader to perform corrective bulk updates.</li>
+                                <li class="mt-2">Developed a C# command line application for parsing JSON file backups of integration projects from our IPaaS solution into a full file and directory structure that mirrors the project layout in the IPaaS UI and is fully compatible with Git source control (our IPaaS vendor offers no source control solution).</li>
+                                <li class="mt-2">Established a source control and Salesforce CLI deployment strategy for our Salesforce platform custom code.</li>
+                                <li class="mt-2">Developed Apex logic for “scrubbing” name data entered by applicants to automate correction of common formatting issues.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" id="expHeader2">
+                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent2" aria-expanded="false" aria-controls="expContent2">
+                            <div class="container w-100 text-uppercase">
+                                <div class="row">
+                                    <div class="col-lg-5 fs-6 text-nowrap">CRM Business System Administrator</div>
+                                    <div class="col-lg-4 fs-6 text-nowrap ms-2 text-muted">Indiana Wesleyan University</div>
+                                    <div class="col-lg-2 fs-6 text-nowrap ms-2">April 2019 - May 2022</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="expContent2" class="accordion-collapse collapse" aria-labelledby="expHeader2" data-bs-parent="#experienceAccordian">
+                        <div class="accordion-body">
+                            <ul class="lh-base">
+                                <li>Quickly became proficient at managing system configuration and custom C# code for the on-prem Microsoft Dynamics CRM installation used for IWU National &amp; Global's student recruitment with very little training, no documentation, and no prior experience.</li>
+                                <li class="mt-2">Developed and implemented several quality-of-life improvements, including automated audit log and email attachment purges and detailed, user-accessible logging for support of custom lead routing configuration managed by the business.</li>
+                                <li class="mt-2">Brought CRM changes (previously made ad hoc, often directly in production) into the university's IT change management process, establishing best practices and a new change window specific to CRM.</li>
+                                <li class="mt-2">Served as an active member of the core project team working with an implementation partner to migrate from Dynamics to Salesforce:
+                                    <ul>
+                                        <li class="mt1">Defined and refined field-to-field mappings for the majority of the integrations between Salesforce and Ellucian Colleague by way of Ellucian Ethos and a custom Colleague API our team developed in-house using C# and the Ellucian Colleague SDK.</li>
+                                        <li class="mt1">Developed endpoints in our custom Colleague API for exchanging student application data between Salesforce and Colleague according to unique business logic not part of the core Colleague platform.</li>
+                                        <li class="mt1">Scripted complex T-SQL extract/transform queries for all data migrated from Dynamics to Salesforce, in several cases incorporating data from the SIS as well.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" id="expHeader3">
+                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent3" aria-expanded="false" aria-controls="expContent3">
+                            <div class="container w-100 text-uppercase">
+                                <div class="row">
+                                    <div class="col-lg-5 fs-6 text-nowrap">Software Developer</div>
+                                    <div class="col-lg-4 fs-6 text-nowrap ms-2 text-muted">Indiana Wesleyan University</div>
+                                    <div class="col-lg-2 fs-6 text-nowrap ms-2">May 2009 - April 2019</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="expContent3" class="accordion-collapse collapse" aria-labelledby="expHeader3" data-bs-parent="#experienceAccordian">
+                        <div class="accordion-body">
+                            <ul class="lh-base">
+                                <li>Attained expert-level development skills in the university's SIS / ERP system, Ellucian Colleague, as well as deep knowledge of its functions in the academic areas such as student credits and credentials, curriculum management, registration and enrollment, and degree completion evaluation.</li>
+                                <li class="mt-2">Worked with several areas of the university to complete important projects requiring deep knowledge of business processes, including a ground-up custom system for automated academic standing evaluation used by the university's Student Services office and a complete overhaul of the software code used to produce the university transcript.</li>
+                                <li class="mt-2">Developed a reputation for excellence in communication, business process evaluation, and solution design and development, both within the university's IT organization and among the university departments with whom I regularly work.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" id="expHeader4">
+                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent4" aria-expanded="false" aria-controls="expContent4">
+                            <div class="container w-100 text-uppercase">
+                                <div class="row">
+                                    <div class="col-lg-5 fs-6 text-nowrap">Web Developer (Student)</div>
+                                    <div class="col-lg-4 fs-6 text-nowrap ms-2 text-muted">Valparaiso University</div>
+                                    <div class="col-lg-2 fs-6 text-nowrap ms-2">June 2008 - May 2009</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="expContent4" class="accordion-collapse collapse" aria-labelledby="expHeader4" data-bs-parent="#experienceAccordian">
+                        <div class="accordion-body">
+                            <ul class="lh-base">
+                                <li>Developed and maintained MySQL database driven PHP web applications for university staff employed inside and outside of the IT department.</li>
+                                <li class="mt-2">Met with staff to discuss progress of projects, desired features and changes, etc.</li>
+                                <li class="mt-2">Developed the database and frontend for a Staff Leave Request application used by the IT department and eventually adapted by others for use by the entire university.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <h2 class="h2 text-center mb-3">Skills</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md">
+                                    <ul class="lh-base my-0">
+                                        <li class="mb-2">Proficient in Apex, SOQL, and C#</li>
+                                        <li class="mb-2">Proficient in Salesforce configuration-based customization / declarative development</li>
+                                        <li class="mb-2">Strong T-SQL scripting skills</li>
+                                        <li class="mb-2">Working knowledge of Dynamics CRM configuration, and declarative and programmatic customization</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md">
+                                    <ul class="lh-base my-0">
+                                        <li class="mb-2">Some knowledge of HTML, CSS, JavaScript, JQuery, Bootstrap</li>
+                                        <li class="mb-2">Business process analysis and design</li>
+                                        <li class="mb-2">Expert Envision Basic programming skills</li>
+                                        <li class="mb-2">Strong knowledge of Ellucian Colleague, particularly academics-related features</li>
+                                        <li class="mb-2">Excellent oral and written communication skills</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <h2 class="h2 text-center mb-3">Education</h2>
+            <div class="accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <div class="accordion-button main-accordian-always-open">
+                            <div class="container w-100 text-uppercase">
+                                <div class="row">
+                                <div class="col-lg-5 fs-6 text-nowrap">B.S. in Computer Science</div>
+                                <div class="col-lg-4 fs-6 text-nowrap ms-2 text-muted">Valparaiso University</div>
+                                <div class="col-lg-2 fs-6 text-nowrap ms-2">May 2009</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-body">
+                        <ul class="list-unstyled">
+                            <li>Minor in Mathematics</li>
+                            <li class="mt-2">Graduated Summa Cum Laude, 3.86 GPA</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="text-center mb-2">
+            <img class="img-fluid rounded-3" src="./images/Me.png" />
+        </div>
+        <p class="text-center mb-2"><a class="text-decoration-none" href="../">https://ornsio.github.io</a></p>
+        <p class="text-center mb-2"><a class="text-decoration-none" href="https://github.com/ornsio"><img src="./images/github.svg" height="18" /> ornsio</a></p>
+        <p class="text-center"><a class="text-decoration-none" href="https://www.linkedin.com/in/kris-willmert/"><img class="d-inline-block position-relative" style="top:-2px;" src="./images/linkedin.svg" height="18" /> Kris Willmert</a></p>
+    </div>
+
+    <script src="./js/popper-core-2.11.6/popper.min.js"></script>
+    <script src="./js/bootstrap-5.2.3/bootstrap.min.js"></script>
+</body>
+</html>
