@@ -1,3 +1,33 @@
 .main-accordian-always-open::after {
     background-image: none !important;
 }
+
+@media print {
+    .print-hide {
+        display: none !important;
+    }
+    .print-no-border {
+        border: none !important;
+    }
+    .print-bold {
+        font-weight: bold;
+    }
+    .pagebreak {
+        page-break-before: always;
+    }
+    .no-pagebreak {
+        page-break-inside: avoid;
+    }
+    .collapse:not(.show) {
+        display: block !important;
+    }
+    .accordion-button:not(.collapsed) {
+        color: unset !important;
+        box-shadow: none !important;
+    }
+}
+@media screen {
+    .screen-hide {
+        display: none !important;
+    }
+}

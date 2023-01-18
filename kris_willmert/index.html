@@ -11,17 +11,18 @@
 <body class="bg-light">
     <div class="container p-5">
         <div class="container mt-3">
-            <div class="text-center mb-3">
+            <div class="text-center mb-3 print-hide">
                 <img class="img-fluid rounded-3" src="./images/MeReal.png" />
             </div>
             <h1 class="h1 text-center">Kristopher K. Willmert</h1>
-            <p class="text-center"><a class="text-decoration-none" href="mailto:kkwillmert@gmail.com">kkwillmert@gmail.com</a></p>
+            <p class="text-center my-0"><a class="text-decoration-none" href="mailto:kkwillmert@gmail.com">kkwillmert@gmail.com</a></p>
+            <p class="text-center mt-3 screen-hide"> My resume is best viewed on the web at: <a class="text-decoration-none" href="https://ornsio.github.io/kris_willmert/">https://ornsio.github.io/kris_willmert/</a></p>
         </div>
 
         <div class="container mt-5">
             <h2 class="h2 text-center mb-3">About Me</h2>
             <div class="accordion">
-                <div class="accordion-item">
+                <div class="accordion-item print-no-border">
                     <div class="accordion-body">
                         <div class="container">
                             I am an enthusiastic software developer with over a decade of experience in higher ed. I am skilled at writing, maintaining, and refactoring organized, efficient, and readable code, as well as clearly communicating complex technical concepts to non-technical clients. I love to learn and apply new technologies through both training and hands-on experience. In my personal life, I love to serve and connect with people at my local church, spend time with family, pursue nerdy hobbies, and drink quality coffees.
@@ -33,20 +34,22 @@
 
         <div class="container mt-5">
             <h2 class="h2 text-center mb-3">Experience</h2>
+            <p class="d-lg-none text-center fs-6 fst-italic text-muted print-hide">Tap to expand or collapse.</p>
+            <p class="d-none d-lg-block text-center fs-6 fst-italic text-muted print-hide">Click an item to expand or collapse details.</p>
             <div class="accordion" id="experienceAccordian">
-                <div class="accordion-item">
-                    <div class="accordion-header" id="expHeader1">
-                        <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#expContent1" aria-expanded="true" aria-controls="expContent1">
+                <div class="accordion-item print-no-border">
+                    <div class="accordion-header no-pagebreak" id="expHeader1">
+                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent1" aria-expanded="true" aria-controls="expContent1">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
-                                    <div class="col-lg-5 fs-6">Salesforce Technical Director</div>
+                                    <div class="col-lg-5 fs-6 print-bold">Salesforce Technical Director</div>
                                     <div class="col-lg-4 fs-6 ms-2 text-muted">Indiana Wesleyan University</div>
                                     <div class="col-lg-2 fs-6 text-nowrap ms-2">May 2022 - Present</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="expContent1" class="accordion-collapse collapse show" aria-labelledby="expHeader1" data-bs-parent="#experienceAccordian">
+                    <div id="expContent1" class="accordion-collapse collapse" aria-labelledby="expHeader1" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
                                 <li>Rapidly addressed multiple data corruption issues caused by uncaught bugs in our third-party-developed IPaaS code immediately after launch, using SOQL to target affected data and Salesforce Dataloader to perform corrective bulk updates.</li>
@@ -57,12 +60,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" id="expHeader2">
+                <div class="accordion-item print-no-border">
+                    <div class="accordion-header no-pagebreak" id="expHeader2">
                         <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent2" aria-expanded="false" aria-controls="expContent2">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
-                                    <div class="col-lg-5 fs-6">CRM Business System Administrator</div>
+                                    <div class="col-lg-5 fs-6h print-bold">CRM Business System Administrator</div>
                                     <div class="col-lg-4 fs-6 ms-2 text-muted">Indiana Wesleyan University</div>
                                     <div class="col-lg-2 fs-6 text-nowrap ms-2">April 2019 - May 2022</div>
                                 </div>
@@ -86,34 +89,35 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" id="expHeader3">
-                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent3" aria-expanded="false" aria-controls="expContent3">
+                <div class="accordion-item print-no-border">
+                    <div class="accordion-header no-pagebreak" id="expHeader3">
+                        <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#expContent3" aria-expanded="false" aria-controls="expContent3">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
-                                    <div class="col-lg-5 fs-6">Software Developer</div>
+                                    <div class="col-lg-5 fs-6 print-bold">Colleague SIS Software Developer</div>
                                     <div class="col-lg-4 fs-6 ms-2 text-muted">Indiana Wesleyan University</div>
                                     <div class="col-lg-2 fs-6 text-nowrap ms-2">May 2009 - April 2019</div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="expContent3" class="accordion-collapse collapse" aria-labelledby="expHeader3" data-bs-parent="#experienceAccordian">
+                    <div id="expContent3" class="accordion-collapse collapse show" aria-labelledby="expHeader3" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
                                 <li>Attained expert-level development skills in the university's SIS / ERP system, Ellucian Colleague, as well as deep knowledge of its functions in the academic areas such as student credits and credentials, curriculum management, registration and enrollment, and degree completion evaluation.</li>
-                                <li class="mt-2">Worked with several areas of the university to complete important projects requiring deep knowledge of business processes, including a ground-up custom system for automated academic standing evaluation used by the university's Student Services office and a complete overhaul of the software code used to produce the university transcript.</li>
+                                <li class="mt-2">Project managed the IWU residential campus' implementation of Ellucian's Colleague Self-Service Student Planning product in coordination with a consultant from Ellucian.</li>
+                                <li class="mt-2">Worked with several areas of the university to complete key projects requiring deep knowledge of business processes, including a ground-up custom system built within Colleague for automated academic standing evaluation used by the university's Student Experience office and a complete overhaul of the software code used to produce the university transcript.</li>
                                 <li class="mt-2">Developed a reputation for excellence in communication, business process evaluation, and solution design and development, both within the university's IT organization and among the university departments with whom I regularly work.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item">
-                    <div class="accordion-header" id="expHeader4">
+                <div class="accordion-item print-no-border                                      d-none">
+                    <div class="accordion-header no-pagebreak" id="expHeader4">
                         <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent4" aria-expanded="false" aria-controls="expContent4">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
-                                    <div class="col-lg-5 fs-6">Web Developer (Student)</div>
+                                    <div class="col-lg-5 fs-6 print-bold">Web Developer (Student)</div>
                                     <div class="col-lg-4 fs-6 ms-2 text-muted">Valparaiso University</div>
                                     <div class="col-lg-2 fs-6 text-nowrap ms-2">June 2008 - May 2009</div>
                                 </div>
@@ -136,25 +140,25 @@
         <div class="container mt-5">
             <h2 class="h2 text-center mb-3">Skills</h2>
             <div class="accordion">
-                <div class="accordion-item">
+                <div class="accordion-item print-no-border">
                     <div class="accordion-body">
                         <div class="container">
                             <div class="row">
                                 <div class="col-md">
                                     <ul class="lh-base my-0">
-                                        <li class="mb-2">Proficient in Apex, SOQL, and C#</li>
-                                        <li class="mb-2">Proficient in Salesforce configuration-based customization / declarative development</li>
+                                        <li class="mb-2">Expert Envision Basic programming skills</li>
+                                        <li class="mb-2">Strong knowledge of Ellucian Colleague, particularly academics-related features</li>
                                         <li class="mb-2">Strong T-SQL scripting skills</li>
-                                        <li class="mb-2">Working knowledge of Dynamics CRM configuration, and declarative and programmatic customization</li>
+                                        <li class="mb-2">Business process analysis and design</li>
+                                        <li class="mb-2">Excellent oral and written communication skills</li>
                                     </ul>
                                 </div>
                                 <div class="col-md">
                                     <ul class="lh-base my-0">
+                                        <li class="mb-2">Proficient in Apex, SOQL, and C#</li>
+                                        <li class="mb-2">Proficient in Salesforce configuration-based customization / declarative development</li>
+                                        <li class="mb-2">Working knowledge of Dynamics CRM configuration, and declarative and programmatic customization</li>
                                         <li class="mb-2">Some knowledge of HTML, CSS, JavaScript, JQuery, Bootstrap</li>
-                                        <li class="mb-2">Business process analysis and design</li>
-                                        <li class="mb-2">Expert Envision Basic programming skills</li>
-                                        <li class="mb-2">Strong knowledge of Ellucian Colleague, particularly academics-related features</li>
-                                        <li class="mb-2">Excellent oral and written communication skills</li>
                                     </ul>
                                 </div>
                             </div>
@@ -167,12 +171,12 @@
         <div class="container mt-5">
             <h2 class="h2 text-center mb-3">Education</h2>
             <div class="accordion">
-                <div class="accordion-item">
-                    <div class="accordion-header">
+                <div class="accordion-item print-no-border">
+                    <div class="accordion-header no-pagebreak">
                         <div class="accordion-button main-accordian-always-open">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
-                                <div class="col-lg-5 fs-6 text-nowrap">B.S. in Computer Science</div>
+                                <div class="col-lg-5 fs-6 text-nowrap print-bold">B.S. in Computer Science</div>
                                 <div class="col-lg-4 fs-6 text-nowrap ms-2 text-muted">Valparaiso University</div>
                                 <div class="col-lg-2 fs-6 text-nowrap ms-2">May 2009</div>
                                 </div>
@@ -180,17 +184,19 @@
                         </div>
                     </div>
                     <div class="accordion-body">
-                        <ul class="list-unstyled">
-                            <li>Minor in Mathematics</li>
-                            <li class="mt-2">Graduated Summa Cum Laude, 3.86 GPA</li>
-                        </ul>
+                        <div class="container">
+                            <ul class="list-unstyled">
+                                <li>Minor in Mathematics</li>
+                                <li class="mt-2">Graduated Summa Cum Laude, 3.86 GPA</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="container my-5">
+    <div class="container my-5 print-hide">
         <div class="text-center mb-2">
             <img class="img-fluid rounded-3" src="./images/Me.png" />
         </div>
