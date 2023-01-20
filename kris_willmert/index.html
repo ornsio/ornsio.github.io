@@ -18,7 +18,8 @@
             <p class="text-center my-0 screen-hide" id="item1"></p>
             <p class="text-center my-0 screen-hide" id="item2"></p>
             <p class="text-center my-0"><a class="text-decoration-none" href="mailto:kkwillmert@gmail.com">kkwillmert@gmail.com</a></p>
-            <p class="text-center mt-3 screen-hide"> My resume is best viewed on the web at: <a class="text-decoration-none" href="https://ornsio.github.io/kris_willmert/">https://ornsio.github.io/kris_willmert/</a></p>
+            <p class="text-center mt-3 screen-hide" id="printNoteDefault"> My resume is best viewed on the web at: <a class="text-decoration-none" href="https://ornsio.github.io/kris_willmert/">https://ornsio.github.io/kris_willmert/</a></p>
+            <p class="text-center mt-3 screen-hide d-none" id="printNoteEllucian"> My resume is best viewed on the web at: <a class="text-decoration-none" href="https://ornsio.github.io/kris_willmert/index.html?emphasis=ellucian">https://ornsio.github.io/kris_willmert/index.html?emphasis=ellucian</a></p>
         </div>
 
         <div class="container mt-5">
@@ -39,9 +40,9 @@
             <p class="d-lg-none text-center fs-6 fst-italic text-muted print-hide">Tap to expand or collapse.</p>
             <p class="d-none d-lg-block text-center fs-6 fst-italic text-muted print-hide">Click an item to expand or collapse details.</p>
             <div class="accordion" id="experienceAccordian">
-                <div class="accordion-item print-no-border">
-                    <div class="accordion-header no-pagebreak" id="expHeader1">
-                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent1" aria-expanded="true" aria-controls="expContent1">
+                <div class="accordion-item print-no-border" id="exp4">
+                    <div class="accordion-header no-pagebreak" id="expHeader4">
+                        <div class="accordion-button" id="expButton4" type="button" data-bs-toggle="collapse" data-bs-target="#expContent4" aria-expanded="true" aria-controls="expContent4">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
                                     <div class="col-lg-5 fs-6 print-bold">Salesforce Technical Director</div>
@@ -51,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="expContent1" class="accordion-collapse collapse" aria-labelledby="expHeader1" data-bs-parent="#experienceAccordian">
+                    <div id="expContent4" class="accordion-collapse collapse show" aria-labelledby="expHeader4" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
                                 <li>Rapidly addressed multiple data corruption issues caused by uncaught bugs in our third-party-developed IPaaS code immediately after launch, using SOQL to target affected data and Salesforce Dataloader to perform corrective bulk updates.</li>
@@ -62,9 +63,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item print-no-border">
-                    <div class="accordion-header no-pagebreak" id="expHeader2">
-                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent2" aria-expanded="false" aria-controls="expContent2">
+                <div class="accordion-item print-no-border" id="exp3">
+                    <div class="accordion-header no-pagebreak" id="expHeader3">
+                        <div class="accordion-button collapsed" id="expButton3" type="button" data-bs-toggle="collapse" data-bs-target="#expContent3" aria-expanded="false" aria-controls="expContent3">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
                                     <div class="col-lg-5 fs-6h print-bold">CRM Business System Administrator</div>
@@ -74,7 +75,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="expContent2" class="accordion-collapse collapse" aria-labelledby="expHeader2" data-bs-parent="#experienceAccordian">
+                    <div id="expContent3" class="accordion-collapse collapse" aria-labelledby="expHeader3" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
                                 <li>Quickly became proficient at managing system configuration and custom C# code for the on-prem Microsoft Dynamics CRM installation used for IWU National &amp; Global's student recruitment with very little training, no documentation, and no prior experience.</li>
@@ -91,9 +92,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item print-no-border">
-                    <div class="accordion-header no-pagebreak" id="expHeader3">
-                        <div class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#expContent3" aria-expanded="false" aria-controls="expContent3">
+                <div class="accordion-item print-no-border" id="exp2">
+                    <div class="accordion-header no-pagebreak" id="expHeader2">
+                        <div class="accordion-button collapsed" id="expButton2" type="button" data-bs-toggle="collapse" data-bs-target="#expContent2" aria-expanded="false" aria-controls="expContent2">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
                                     <div class="col-lg-5 fs-6 print-bold">Colleague SIS Software Developer</div>
@@ -103,7 +104,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="expContent3" class="accordion-collapse collapse show" aria-labelledby="expHeader3" data-bs-parent="#experienceAccordian">
+                    <div id="expContent2" class="accordion-collapse collapse" aria-labelledby="expHeader2" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
                                 <li>Attained expert-level development skills in the university's SIS / ERP system, Ellucian Colleague, as well as deep knowledge of its functions in the academic areas such as student credits and credentials, curriculum management, registration and enrollment, and degree completion evaluation.</li>
@@ -114,9 +115,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item print-no-border                                      d-none">
-                    <div class="accordion-header no-pagebreak" id="expHeader4">
-                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#expContent4" aria-expanded="false" aria-controls="expContent4">
+                <div class="accordion-item print-no-border" id="exp1">
+                    <div class="accordion-header no-pagebreak" id="expHeader1">
+                        <div class="accordion-button collapsed" id="expButton1" type="button" data-bs-toggle="collapse" data-bs-target="#expContent1" aria-expanded="false" aria-controls="expContent1">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
                                     <div class="col-lg-5 fs-6 print-bold">Web Developer (Student)</div>
@@ -126,7 +127,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="expContent4" class="accordion-collapse collapse" aria-labelledby="expHeader4" data-bs-parent="#experienceAccordian">
+                    <div id="expContent1" class="accordion-collapse collapse" aria-labelledby="expHeader1" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
                                 <li>Developed and maintained MySQL database driven PHP web applications for university staff employed inside and outside of the IT department.</li>
@@ -144,7 +145,28 @@
             <div class="accordion">
                 <div class="accordion-item print-no-border">
                     <div class="accordion-body">
-                        <div class="container">
+                        <div class="container" id="skillsDefault">
+                            <div class="row">
+                                <div class="col-md">
+                                    <ul class="lh-base my-0">
+                                        <li class="mb-2">Proficient in Apex, SOQL, and C#</li>
+                                        <li class="mb-2">Proficient in Salesforce configuration-based customization / declarative development</li>
+                                        <li class="mb-2">Strong T-SQL scripting skills</li>
+                                        <li class="mb-2">Working knowledge of Dynamics CRM configuration, and declarative and programmatic customization</li>
+                                        <li class="mb-2">Some knowledge of HTML, CSS, JavaScript, JQuery, Bootstrap</li>
+                                    </ul>
+                                </div>
+                                <div class="col-md">
+                                    <ul class="lh-base my-0">
+                                        <li class="mb-2">Expert Envision Basic programming skills</li>
+                                        <li class="mb-2">Strong knowledge of Ellucian Colleague, particularly academics-related features</li>
+                                        <li class="mb-2">Business process analysis and design</li>
+                                        <li class="mb-2">Excellent oral and written communication skills</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container d-none" id="skillsEllucian">
                             <div class="row">
                                 <div class="col-md">
                                     <ul class="lh-base my-0">
@@ -191,6 +213,34 @@
                                 <li>Minor in Mathematics</li>
                                 <li class="mt-2">Graduated Summa Cum Laude, 3.86 GPA</li>
                             </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-5">
+            <h2 class="h2 text-center mb-3">Endorsements</h2>
+            <p class="d-lg-none text-center fs-6 fst-italic text-muted print-hide">Tap to expand or collapse.</p>
+            <p class="d-none d-lg-block text-center fs-6 fst-italic text-muted print-hide">Click an item to expand or collapse details.</p>
+            <div class="accordion" id="endorsementAccordion">
+                <div class="accordion-item print-no-border">
+                    <div class="accordion-header no-pagebreak" id="endHeader1">
+                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#endContent1" aria-expanded="true" aria-controls="endContent1">
+                            <div class="container w-100">
+                                <div class="row">
+                                    <div class="col-3 col-md-2 col-lg-1 fs-6 print-hide"><img src="./images/Sue.jpg" class="img-fluid rounded-circle"></div>
+                                    <div class="col-8 col-lg-8 fs-6"><span class="print-bold">Sue Melton</span><br /><span class="text-muted">VP, Office of Student Services, Indiana Wesleyan University (retired)</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="endContent1" class="accordion-collapse collapse" aria-labelledby="endHeader1" data-bs-parent="#endorsementAccordion">
+                        <div class="accordion-body">
+                            <div class="container small fst-italic">
+                                <p>&#8220;It has been my privilege to work with Kris for many years in my Vice President role at Indiana Wesleyan University.  Kris developed a comprehensive package for us that allowed us to evaluate academic standing on a continuous basis, complete with rules, communications, and documentation.  Not only was this a customization to our system, but it was set up in a way for the user to be able to configure as needed in the future without IT assistance.</p>
+                                <p>Kris’s understanding of our IT systems is phenomenal.  While an office may request an enhancement for its immediate need, Kris is always researching it in light of the bigger picture and is able to articulate the impact and/or difficulty of fulfilling that request. I have greatly respected his knowledge of systems and appreciated his patience and good nature while assisting those of us who have limited experience in the technology environment.  His support has been outstanding.&#8221;</p>
+                            </div>
                         </div>
                     </div>
                 </div>
