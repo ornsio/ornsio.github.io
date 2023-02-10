@@ -1,0 +1,279 @@
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(180,180,180,0.3); 
+}
+ 
+::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #333;
+    -webkit-box-shadow: inset 0 0 6px rgba(100,100,100,0.5); 
+}
+
+::-webkit-resizer {
+    background-image: none;
+}
+
+body,div,thead,tbody,tr,td {
+	margin: 0px;
+	padding: 0px;
+}
+
+th {
+    font-weight: unset;
+    font-size: 0.9em;
+}
+
+body {
+	background-color: #222;
+	color: whitesmoke;
+}
+
+input,textarea {
+	font-family: Arial, sans-serif;
+}
+
+input[type=text]:focus {
+    outline: none;
+}
+
+textarea:focus {
+    outline: none;
+}
+
+a {
+    /* color: #ffaa00; */
+	color: #55aaff;
+	text-decoration: none;
+}
+
+a:hover {
+	color: white;
+	text-decoration: none;
+}
+
+#header {
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	padding: 10px 0px 10px 10px;
+	/* background-color: #004589; */
+    background-color: #006925;
+}
+
+.headerItem {
+	display: inline-block;
+	padding: 5px 0px 5px 0px;
+	margin-right: 5px;
+}
+
+#totalTime {
+	min-width: 75px;
+	text-align: right;
+	font-size: 1.25em;
+	font-weight: bold;
+	color: whitesmoke;
+	margin-right: 15px;
+}
+
+.button {
+	height: 12px;
+	padding: 5px;
+	/* border: 2px outset #003070; */
+    border: 2px outset #005010;
+	text-align: center;
+	font-weight: bold;
+	font-family: sans-serif;
+	font-size: 0.8em;
+	color: #d8d8d8;
+	/* background-color: #0555aa; */
+    background-color: #007535;
+	cursor: pointer;
+}
+
+#options {
+	display: none;
+	position: fixed;
+	top: 30px;
+	left: 60px;
+    width: 500px;
+	max-height: 100%;
+	overflow-y: auto;
+	text-align: right;
+	font-family: sans-serif;
+	/* border: 2px outset #003070; */
+	/* background-color: #0555aa; */
+    border: 3px outset #005010;
+	background-color: #006925;
+	color: #d8d8d8;
+    box-shadow: 2px 2px 6px black;
+}
+
+.option {
+	padding: 5px;
+}
+
+.tips {
+	text-align: left;
+	margin-top: 20px;
+	margin-left: 5px;
+}
+
+.tip {
+	margin: 5px 5px 10px 10px;
+}
+
+.optionToggler {
+    /* color: #ffaa00; */
+	color: #0099ff;
+	cursor: pointer;
+}
+
+.optionToggler:hover {
+	color: white;
+}
+
+#resetAllButton {
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#downloadButton {
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#deleteAllButton {
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+
+#timerMain {
+	margin: 70px 20px 8px 10px;
+	padding-bottom: 2px;
+	width: 95%;
+	min-width: 800px;
+    font-family: sans-serif;
+}
+
+.timerTable {
+    width: 100%;
+    border-spacing: 3px 10px;
+    border-collapse: separate;
+}
+
+.timerCell {
+    border-style: groove;
+	border-width: 2px;
+	border-color: #444;
+    padding: 3px;
+}
+
+
+.timerText {
+	font-size: 1.15em;
+    text-align: right;
+    width: 71px;
+    padding-right: 10px;
+}
+
+.timerActive {
+	/* color: #55aaff; */
+    color: #88ff88;
+}
+
+.timerControls {
+    width: 218px;
+    padding-left: 6px;
+}
+
+.timerButton {
+	float: left;
+	margin: 3px;
+	border: 2px outset #444;
+	vertical-align: text-top;
+	cursor: pointer;
+	overflow: hidden;
+	background-color: #2f2f2f;
+	color: #ccc;
+    user-select: none;
+}
+
+.buttonFont1 {
+    font-family: Webdings;
+    font-size: 1.25em;
+    width: 21px;
+	height: 21px;
+}
+
+.buttonFont2 {
+    font-family: "Wingdings 3";
+    font-size: 1.15em;
+    padding-left: 2px;
+    width: 19px;
+    height: 21px;
+}
+
+.timerLabel {
+    width: 400px;
+}
+
+.timerTitle {
+    width: 99%;
+    margin: 0px 0px 0px 5px;
+	padding: 0px;
+	/**/
+	border: none;
+    background-color: #222;
+	color: #ccc;
+    font-size: 0.85em;
+    font-weight: bold;
+}
+
+.timerNotes {
+    min-width: 300px;
+}
+
+.timerTextarea {
+    width: 100%;
+	margin: 0px;
+	padding: 5px 0px 2px 2px;
+	/**/
+	border: none;
+	background-color: #222;
+	color: #ccc;
+}
+
+.timerInfo {
+	margin: 0px 0px 0px 5px;
+	height: 0px;
+	font-family: sans-serif;
+	font-size: 0.85em;
+	color: #222;
+	
+	/* CSS3 transitions */
+	transition-property: color, height, margin-top;
+    transition-duration: 2s;
+}
+
+.timerInfoVisible {
+	color: #ffaa00;
+    height: 24px;
+    margin-top: 5px;
+}
+
+.hidden {
+	display: none;
+}

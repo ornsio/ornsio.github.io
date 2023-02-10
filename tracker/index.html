@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<link href="css/tracker.css" type="text/css" rel="stylesheet" />
+	<link rel="shortcut icon" href="favicon.png" type="image/x-icon" />
+	
+	<!-- ************************************************************
+	Autosize 3.0.4
+	license: MIT (http://www.opensource.org/licenses/mit-license.php)
+	http://www.jacklmoore.com/autosize
+	************************************************************* -->
+	<script type="text/javascript" src="js/autosize.js"></script>
+	<!-- ******************************************************** -->
+	
+	<script type="text/javascript" src="js/tracker.js"></script>
+	
+	<title>Tracker</title>
+</head>
+
+<body onload="initializePage();">
+	<div id="header">
+		<div id="totalTime" class="headerItem"></div>
+		<div class="headerItem"><div class="button" onclick="addTimer(); savePageState();">Add Timer</div></div>
+        <div class="headerItem"><div class="button" onclick="undoLastDelete(); savePageState();">Undo Delete</div></div>
+		<div class="headerItem"><div class="button" onclick="pauseAll(); savePageState();">Pause All</div></div>
+		<div class="headerItem"><div class="button" onclick="showOptions(); savePageState();">Options</div></div>
+	</div>
+	
+	<div id="options">
+		<div class="option optionToggler" onclick="hideOptions();">[X] Close</div>
+		<div class="option">Confirmation prompt on Reset:<input type="checkbox" id="promptReset" onclick="confirmReset = document.getElementById( 'promptReset' ).checked; savePageState();" /></div>
+		<div class="option">Confirmation prompt on Clear:<input type="checkbox" id="promptClear" onclick="confirmClear = document.getElementById( 'promptClear' ).checked; savePageState();" /></div>
+		<div class="option">Confirmation prompt on Delete:<input type="checkbox" id="promptDelete" onclick="confirmDelete = document.getElementById( 'promptDelete' ).checked; savePageState();;" /></div>
+		<div class="option">Automatically start timing new timers:<input type="checkbox" id="autoStart" onclick="autoStartNewTimer = document.getElementById( 'autoStart' ).checked; savePageState();" /></div>
+		<div class="option">Allow only one timer to run at a time:<input type="checkbox" id="onlyOneRunning" onclick="onlyAllowOneTiming = document.getElementById( 'onlyOneRunning' ).checked; savePageState();" /></div>
+        <div class="tips">
+			<div>Tips:</div>
+			<div class="tip">1. The page saves EVERYTHING (timers, options, etc.) to the browser's local storage in "real time".  This means you can close the page, close your browser, shut down your computer, whatever, and everything will be saved for you to return to the next time you open the page.</div>
+			<div class="tip">2. A timer that is running will continue to time even when the page isn't open.  This means you could start a timer, close the page (or even shut down your computer), leave for 2 hours, come back, pull up the page again, and the timer will have captured the 2 hours you were gone.</div>
+			<div class="tip">3. You can increment or decrement a timer by 15 minutes per click by holding down the Control key when clicking the +1/-1 buttons, or by 1 hour per click by holding down Shift.</div>
+			<div class="tip">4. The cells for Notes will automatically adjust their vertical size to accommodate all text in them as you type (see <a href="http://www.jacklmoore.com/autosize" target="_blank">here</a> for the source of this nifty javascript written by Jack Moore).</div>
+		</div>
+        <div id="resetAllButton" class="button" onclick="resetAll(); hideOptions(); savePageState();">Reset All Timers</div>
+        <div id="downloadButton" class="button" onclick="downloadToCsv(); hideOptions(); savePageState();">Download All Timers to CSV</div>
+        <div id="deleteAllButton" class="button" onclick="deleteAll(); hideOptions(); savePageState();">Delete All Timers and History</div>
+	</div>
+	
+	<div id="timerMain">
+        <table class="timerTable">
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Controls</th>
+                    <th>Label</th>
+                    <th>Notes</th>
+                </tr>
+            </thead>
+            <tbody id="timerTable"></tbody>
+        </table>
+    </div>
+</body>
+</html>
