@@ -669,6 +669,8 @@ function downloadToCsv() {
         csvText += thisLine.join( ',' ) + "\n";
     }
 
+    csvText += "\nTotal Time:," + document.getElementById( 'totalTime' ).innerHTML;
+
     var today = new Date();
 
     var tempDownloadAnchor = document.createElement( 'a' );
@@ -699,6 +701,9 @@ function csvEscape( input ) {
         if ( output.indexOf( '"' ) > -1 ) {
             output = output.replaceAll( '"','""' );
         }
+
+        // Even when quoted, Excel still annoyingly thinks a cell starting with a - is a formula...
+        output = output.replace( /(^|\n)-/g, '$1*' );
 
         output = '"' + output + '"';
     }

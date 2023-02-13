@@ -262,6 +262,7 @@ a:hover {
 	font-family: sans-serif;
 	font-size: 0.85em;
 	color: #222;
+    overflow-y: hidden;
 	
 	/* CSS3 transitions */
 	transition-property: color, height, margin-top;
