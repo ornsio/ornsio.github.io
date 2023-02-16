@@ -227,7 +227,7 @@ a:hover {
 }
 
 .timerLabel {
-    width: 400px;
+    width: 310px;
 }
 
 .timerTitle {
@@ -238,7 +238,7 @@ a:hover {
 	border: none;
     background-color: #222;
 	color: #ccc;
-    font-size: 0.85em;
+    font-size: 0.9em;
     font-weight: bold;
 }
 
@@ -254,6 +254,7 @@ a:hover {
 	border: none;
 	background-color: #222;
 	color: #ccc;
+    font-size: 0.9em;
 }
 
 .timerInfo {
