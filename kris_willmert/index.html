@@ -55,10 +55,11 @@
                     <div id="expContent4" class="accordion-collapse collapse show" aria-labelledby="expHeader4" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
-                                <li>Rapidly addressed multiple data corruption issues caused by uncaught bugs in our third-party-developed IPaaS code immediately after launch, using SOQL to target affected data and Salesforce Dataloader to perform corrective bulk updates.</li>
-                                <li class="mt-2">Developed a C# command line application for parsing JSON file backups of integration projects from our IPaaS solution into a full file and directory structure that mirrors the project layout in the IPaaS UI and is fully compatible with Git source control (our IPaaS vendor offers no source control solution).</li>
-                                <li class="mt-2">Established a source control and Salesforce CLI deployment strategy for our Salesforce platform custom code.</li>
-                                <li class="mt-2">Developed Apex logic for “scrubbing” name data entered by applicants to automate correction of common formatting issues.</li>
+                                <li>Rapidly addressed multiple data corruption issues caused by uncaught bugs in our third-party-developed IPaaS code immediately after launch, using SOQL to target affected data and Salesforce Dataloader to perform corrective bulk updates in Salesforce, and T-SQL scripting to correct data in the Colleague SIS.</li>
+                                <li class="mt-2">Developed a C# command line application for parsing JSON file backups of integration projects from our IPaaS solution into a full file and directory structure that mirrors the project layout in the IPaaS UI and is fully compatible with Git source control (our IPaaS vendor offers no source control solution). Utilized this tool to identify and address multiple uncaught bugs in vendor-developed code before they were deployed to production.</li>
+                                <li class="mt-2">Established a source control and Salesforce CLI deployment strategy for our Salesforce platform custom code, and scripted custom PowerShell commands to simplify Salesforce CLI interactions.</li>
+                                <li class="mt-2">Developed Apex logic implemented via the EDA TDTM framework for "scrubbing" name data entered by applicants to automate correction of common formatting issues.</li>
+                                <li class="mt-2">Created a base project template in our IPaaS solution for future integrations between Salesforce and the SIS, including environment-specific connection tests, credential management, and error handling.  Leveraged this template to significantly accelerate build on subsequent projects for new integrations.</li>
                             </ul>
                         </div>
                     </div>
@@ -220,7 +221,8 @@
         </div>
 
         <div class="container mt-5">
-            <h2 class="h2 text-center mb-3">Endorsements</h2>
+            <h2 class="h2 text-center">Endorsements</h2>
+            <p class="mb-3 text-center fs-6 fst-italic">(Full references available upon request)</p>
             <p class="d-lg-none text-center fs-6 fst-italic text-muted print-hide">Tap to expand or collapse.</p>
             <p class="d-none d-lg-block text-center fs-6 fst-italic text-muted print-hide">Click an item to expand or collapse details.</p>
             <div class="accordion" id="endorsementAccordion">
@@ -273,7 +275,7 @@
                             <div class="container w-100">
                                 <div class="row">
                                     <div class="col-3 col-md-2 col-lg-1 fs-6 print-hide"><img src="./images/Sarah.jfif" class="img-fluid rounded-circle"></div>
-                                    <div class="col-8 col-lg-8 fs-6"><span class="print-bold">Sarah Flanagin</span>, ACBA, CSM<br /><span class="text-muted">Project Manager and Business Analyst, SFlanagin &amp; Associates, LLC</span><br /><a class="text-decoration-none" href="https://www.linkedin.com/in/sarah-flanagin/" target="_blank"><img class="d-inline-block position-relative" style="top:-2px;" src="./images/linkedin.svg" height="18" alt="Sarah's LinkedIn" /></a></div>
+                                    <div class="col-8 col-lg-8 fs-6"><span class="print-bold">Sarah Flanagin</span>, ACBA, CSM<br /><span class="text-muted">Project Manager and Business Analyst, SFlanagin &amp; Associates, LLC</span><br /><a class="text-decoration-none print-hide" href="https://www.linkedin.com/in/sarah-flanagin/" target="_blank"><img class="d-inline-block position-relative" style="top:-2px;" src="./images/linkedin.svg" height="18" alt="Sarah's LinkedIn" /></a></div>
                                 </div>
                             </div>
                         </div>
@@ -289,6 +291,7 @@
 
             </div>
         </div>
+
     </div>
 
     <div class="container my-5 print-hide">
