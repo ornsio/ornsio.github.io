@@ -40,6 +40,26 @@
             <p class="d-lg-none text-center fs-6 fst-italic text-muted print-hide">Tap to expand or collapse.</p>
             <p class="d-none d-lg-block text-center fs-6 fst-italic text-muted print-hide">Click an item to expand or collapse details.</p>
             <div class="accordion" id="experienceAccordian">
+                <div class="accordion-item print-no-border" id="exp5">
+                    <div class="accordion-header no-pagebreak" id="expHeader5">
+                        <div class="accordion-button collapsed" id="expButton5" type="button" data-bs-toggle="collapse" data-bs-target="#expContent5" aria-expanded="true" aria-controls="expContent5">
+                            <div class="container w-100 text-uppercase">
+                                <div class="row">
+                                    <div class="col-lg-5 fs-6 print-bold">Senior Technology Executive</div>
+                                    <div class="col-lg-4 fs-6 ms-2 text-muted">CampusWorks, Inc.</div>
+                                    <div class="col-lg-2 fs-6 text-nowrap ms-2">March 2023 - Present</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="expContent5" class="accordion-collapse collapse" aria-labelledby="expHeader5" data-bs-parent="#experienceAccordian">
+                        <div class="accordion-body">
+                            <ul class="lh-base">
+                                <li>Achievements forthcoming!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
                 <div class="accordion-item print-no-border" id="exp4">
                     <div class="accordion-header no-pagebreak" id="expHeader4">
                         <div class="accordion-button" id="expButton4" type="button" data-bs-toggle="collapse" data-bs-target="#expContent4" aria-expanded="true" aria-controls="expContent4">
@@ -47,7 +67,7 @@
                                 <div class="row">
                                     <div class="col-lg-5 fs-6 print-bold">Salesforce Technical Director</div>
                                     <div class="col-lg-4 fs-6 ms-2 text-muted">Indiana Wesleyan University</div>
-                                    <div class="col-lg-2 fs-6 text-nowrap ms-2">May 2022 - Present</div>
+                                    <div class="col-lg-2 fs-6 text-nowrap ms-2">May 2022 - March 2023</div>
                                 </div>
                             </div>
                         </div>
@@ -55,11 +75,11 @@
                     <div id="expContent4" class="accordion-collapse collapse show" aria-labelledby="expHeader4" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
-                                <li>Rapidly addressed multiple data corruption issues caused by uncaught bugs in our third-party-developed IPaaS code immediately after launch, using SOQL to target affected data and Salesforce Dataloader to perform corrective bulk updates in Salesforce, and T-SQL scripting to correct data in the Colleague SIS.</li>
+                                <li>Rapidly addressed multiple data corruption issues caused by uncaught bugs in IWU's third-party-developed IPaaS code immediately after launch, using SOQL to target affected data and Salesforce Dataloader to perform corrective bulk updates in Salesforce, and T-SQL scripting to correct data in the Colleague SIS.</li>
                                 <li class="mt-2">Developed a C# command line application for parsing JSON file backups of integration projects from our IPaaS solution into a full file and directory structure that mirrors the project layout in the IPaaS UI and is fully compatible with Git source control (our IPaaS vendor offers no source control solution). Utilized this tool to identify and address multiple uncaught bugs in vendor-developed code before they were deployed to production.</li>
-                                <li class="mt-2">Established a source control and Salesforce CLI deployment strategy for our Salesforce platform custom code, and scripted custom PowerShell commands to simplify Salesforce CLI interactions.</li>
+                                <li class="mt-2">Established a source control and Salesforce CLI deployment strategy for IWU's Salesforce platform custom code, and scripted custom PowerShell commands to simplify Salesforce CLI interactions.</li>
                                 <li class="mt-2">Developed Apex logic implemented via the EDA TDTM framework for "scrubbing" name data entered by applicants to automate correction of common formatting issues.</li>
-                                <li class="mt-2">Created a base project template in our IPaaS solution for future integrations between Salesforce and the SIS, including environment-specific connection tests, credential management, and error handling.  Leveraged this template to significantly accelerate build on subsequent projects for new integrations.</li>
+                                <li class="mt-2">Created a base project template in IWU's IPaaS solution for future integrations between Salesforce and the SIS, including environment-specific connection tests, credential management, error handling, and an alternate logging mechanism that circumvents per-file character limitations in the native platform logger.  Leveraged this template to significantly accelerate build on subsequent projects for new integrations.</li>
                             </ul>
                         </div>
                     </div>
@@ -84,8 +104,8 @@
                                 <li class="mt-2">Brought CRM changes (previously made ad hoc, often directly in production) into the university's IT change management process, establishing best practices and a new change window specific to CRM.</li>
                                 <li class="mt-2">Served as an active member of the core project team working with an implementation partner to migrate from Dynamics to Salesforce:
                                     <ul>
-                                        <li class="mt1">Defined and refined field-to-field mappings for the majority of the integrations between Salesforce and Ellucian Colleague by way of Ellucian Ethos and a custom Colleague API our team developed in-house using C# and the Ellucian Colleague SDK.</li>
-                                        <li class="mt1">Developed endpoints in our custom Colleague API for exchanging student application data between Salesforce and Colleague according to unique business logic not part of the core Colleague platform.</li>
+                                        <li class="mt1">Defined and refined field-to-field mappings for the majority of the integrations between Salesforce and Ellucian Colleague by way of Ellucian Ethos and a custom Colleague API the IWU Software Team developed in-house using C# and the Ellucian Colleague SDK.</li>
+                                        <li class="mt1">Developed endpoints in IWU's custom Colleague API for exchanging student application data between Salesforce and Colleague according to unique business logic not part of the core Colleague platform.</li>
                                         <li class="mt1">Scripted complex T-SQL extract/transform queries for all data migrated from Dynamics to Salesforce, in several cases incorporating data from the SIS as well.</li>
                                     </ul>
                                 </li>
@@ -111,12 +131,12 @@
                                 <li>Attained expert-level development skills in the university's SIS / ERP system, Ellucian Colleague, as well as deep knowledge of its functions in the academic areas such as student credits and credentials, curriculum management, registration and enrollment, and degree completion evaluation.</li>
                                 <li class="mt-2">Project managed the IWU residential campus' implementation of Ellucian's Colleague Self-Service Student Planning product in coordination with a consultant from Ellucian.</li>
                                 <li class="mt-2">Worked with several areas of the university to complete key projects requiring deep knowledge of business processes, including a ground-up custom system built within Colleague for automated academic standing evaluation used by the university's Student Experience office and a complete overhaul of the software code used to produce the university transcript.</li>
-                                <li class="mt-2">Developed a reputation for excellence in communication, business process evaluation, and solution design and development, both within the university's IT organization and among the university departments with whom I regularly work.</li>
+                                <li class="mt-2">Developed a reputation for excellence in communication, business process evaluation, and solution design and development, both within the university's IT organization and among the university departments with whom I regularly worked.</li>
                             </ul>
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item print-no-border                                                         d-none" id="exp1">
+                <div class="accordion-item print-no-border   d-none   " id="exp1">
                     <div class="accordion-header no-pagebreak" id="expHeader1">
                         <div class="accordion-button collapsed" id="expButton1" type="button" data-bs-toggle="collapse" data-bs-target="#expContent1" aria-expanded="false" aria-controls="expContent1">
                             <div class="container w-100 text-uppercase">
