@@ -1,25 +1,6 @@
 body {
-    background-color: #111122;
+    background-color: #111133;
     color: #ffffff;
-    font-size: 16px;
-    font-family: sans-serif;
-}
-
-p {
-    margin-top: 20px;
-    margin-bottom: 0px;
-}
-
-ul, ol {
-    margin-top: 12px;
-    margin-bottom: 0px;
-    display: inline-block;
-}
-
-li {
-    margin-top: 8px;
-    margin-bottom: 0px;
-    text-align: left;
 }
 
 a {
@@ -28,29 +9,4 @@ a {
 
 a:hover {
     color: #ffffff;
-}
-
-.content {
-    max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 75px;
-    text-align: center;
-}
-
-.section {
-    margin-top: 60px;
-}
-
-#title {
-    font-size: 24px;
-    margin-bottom: 30px;
-}
-
-#image {
-    background-image: url('../images/ornsio.png');
-    min-width: 250px;
-    min-height: 250px;
-    display: inline-block;
-    margin-bottom: 40px;
 }

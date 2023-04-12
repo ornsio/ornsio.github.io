@@ -1,37 +1,79 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./styles/index.css" />
+    
     <title>Home - ornsio</title>
     <link rel="icon" type="image/png" href="favicon.png" />
-    <link rel="stylesheet" type="text/css" href="./styles/index.css" />
 </head>
 <body>
-    <div class="content">
-        <div id="image"></div>
-        <div id="title">Welcome to ornsio.github.io</div>
-
-        <div class="section">
-            <p>Here you will find my resume, as well as some fun little hobby projects I've developed:</p>
-            <ul>
-                <li><a href="./kris_willmert/">My Resume</a></li>
-                <li><a href="./dad/">Dad Joke of the Day</a></li>
-                <li><a href="./ler/">Lengthy Email Reader</a></li>
-                <li><a href="./rmb/">Remote Meeting Beautifier</a></li>
-                <li><a href="./find/">Find by Line (Experimental)</a></li>
-            </ul>
+    <div class="container p-5">
+        <div class="container mt-3 text-center">
+            <img class="img-fluid rounded-3" src="./images/ornsio.png" />
         </div>
 
-        <div class="section">
-            <p>I am also a life-long gamer, and you can find some of my gaming-related hobby projects here:</p>
-            <ul>
-                <li><a href="https://khaos-ff6.github.io/guide.html">The Abbreviated Guide to Final Fantasy VI</a></li>
-                <li><a href="https://khaos-ff6.github.io/vfo/chests.html">VFO Chest Tracker</a></li>
-            </ul>
+        <div class="container mt-4 text-center">
+            <h1 class="h2">Welcome to ornsio.github.io</h1>
         </div>
 
-        <div class="section">
-            <p>(Google Chrome is the recommended browser for these sites.)</p>
+        <div class="container mt-5">
+            <p class="text-center">Here you will find my resume, as well as some fun little hobby projects I've developed:</p>
+
+            <div class="row justify-content-center">
+                <div class="col-auto col-sm-8 col-lg-6 col-xl-4">
+                    <ul>
+                        <li class="mb-2">
+                            <a href="./kris_willmert/">My Resume</a>
+                            <br /><span class="text-muted">Pretty self-explanatory :-)</span>
+                        </li>
+                        <li class="mb-2">
+                            <a href="./tracker/">Tracker</a>
+                            <br /><span class="text-muted">A daily work/task time tracking tool</span>
+                        </li>
+                        <li class="mb-2">
+                            <a href="./dad/">Dad Joke of the Day</a>
+                            <br /><span class="text-muted">A goofy little joke reader that makes use of a free dad joke API</span>
+                        </li>
+                        <li class="mb-2">
+                            <a href="./ler/">Lengthy Email Reader</a>
+                            <br /><span class="text-muted">For when you need to make consuming that long email just a little more interesting</span>
+                        </li>
+                        <li class="mb-2">
+                            <a href="./rmb/">Remote Meeting Beautifier</a>
+                            <br /><span class="text-muted">For when you are on-camera in a dark room with a large monitor</span>
+                        </li>
+                        <li>
+                            <a href="./find/">Find by Line</a>
+                            <br /><span class="text-muted">Experimental project using regex with web workers (buggy, but interesting)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
+
+        <div class="container mt-5">
+            <p class="text-center">I am also a life-long gamer, and you can find some of my gaming-related hobby projects here:</p>
+
+            <div class="row justify-content-center">
+                <div class="col-auto">
+                    <ul>
+                        <li class="mb-2"><a href="https://khaos-ff6.github.io/guide.html">The Abbreviated Guide to Final Fantasy VI</a></li>
+                        <li><a href="https://khaos-ff6.github.io/vfo/chests.html">VFO Chest Tracker</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container mt-4">
+            <p class="text-center text-muted">(Google Chrome is my browser of choice and is recommended for most of the above sites.)</p>
+        </div>
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </div>
 </body>
 </html>
