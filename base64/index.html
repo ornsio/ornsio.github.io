@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Base64 Decode/Encode</title>
+
+        <link rel="icon" type="image/png" href="favicon.png" />
+        <link rel="stylesheet" type="text/css" href="./styles/style.css" />
+        <script src="js/main.js"></script>
+    </head>
+    <body>
+        <div id="content">
+            <div class="title">Base64 Decode/Encode Input</div>
+            <textarea id="userText" placeholder=' Paste the text here that you wish to decode or encode...'></textarea>
+            <button id="decodeButton" onclick="decode();">Base64 Decode</button>
+            <button id="encodeButton" onclick="encode();">Base64 Encode</button>
+
+            <div class="separator"></div>
+
+            <div class="title">Output</div>
+            <button id="selectButton" onclick="selectOutput();">Click to Select All</button>
+            <div id="output"></div>
+        </div>
+    </body>
+</html>
