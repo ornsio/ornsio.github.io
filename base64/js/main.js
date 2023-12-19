@@ -6,7 +6,13 @@ function decode() {
     var decodeArray = [];
 
     for ( var i = 0; i < textArray.length; i++ ) {
-        var decoded = atob( textArray[i] );
+        try {
+            var decoded = atob( textArray[i] );
+        }
+        catch (e) {
+            alert( 'The input string on row ' + (i+1) + ' is not a valid base64 encoded string.' );
+            throw e;
+        }
         decodeArray.push( decoded );
     }
 
