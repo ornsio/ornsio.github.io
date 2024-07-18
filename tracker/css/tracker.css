@@ -111,6 +111,18 @@ a:hover {
     box-shadow: 2px 2px 6px black;
 }
 
+#downloadOptions {
+    display: none;
+    position: fixed;
+    top: 645px;
+    left: 230px;
+    width: 350px;
+    border: 3px outset #005010;
+	background-color: #006925;
+	color: #d8d8d8;
+    box-shadow: 2px 2px 6px black;
+}
+
 .option {
 	padding: 5px;
 }
@@ -143,7 +155,23 @@ a:hover {
     margin-bottom: 10px;
 }
 
+#showDownloadButton {
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 #downloadButton {
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#downloadButtonAppend {
     width: 200px;
     margin-left: auto;
     margin-right: auto;
@@ -157,6 +185,27 @@ a:hover {
     margin-right: auto;
     margin-top: 10px;
     margin-bottom: 10px;
+}
+
+#appendButton {
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#userFile {
+    position: relative;
+    bottom: 74px;
+    right: 138px;
+    width: 306px;
+    height: 26px;
+    padding: 0px;
+    margin: 0px;
+    border: 2px solid black;
+    opacity: 0;
+    cursor: pointer;
 }
 
 

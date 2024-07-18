@@ -28,7 +28,7 @@
 	</div>
 	
 	<div id="options">
-		<div class="option optionToggler" onclick="hideOptions();">[X] Close</div>
+		<div class="option optionToggler" onclick="hideDownloadOptions(); hideOptions();">[X] Close</div>
 		<div class="option">Confirmation prompt on Reset:<input type="checkbox" id="promptReset" onclick="confirmReset = document.getElementById( 'promptReset' ).checked; savePageState();" /></div>
 		<div class="option">Confirmation prompt on Clear:<input type="checkbox" id="promptClear" onclick="confirmClear = document.getElementById( 'promptClear' ).checked; savePageState();" /></div>
 		<div class="option">Confirmation prompt on Delete:<input type="checkbox" id="promptDelete" onclick="confirmDelete = document.getElementById( 'promptDelete' ).checked; savePageState();;" /></div>
@@ -42,8 +42,17 @@
 			<div class="tip">4. The cells for Notes will automatically adjust their vertical size to accommodate all text in them as you type (see <a href="http://www.jacklmoore.com/autosize" target="_blank">here</a> for the source of this nifty javascript written by Jack Moore).</div>
 		</div>
         <div id="resetAllButton" class="button" onclick="resetAll(); hideOptions(); savePageState();">Reset All Timers</div>
-        <div id="downloadButton" class="button" onclick="downloadToCsv(); hideOptions(); savePageState();">Download All Timers to CSV</div>
+        <!-- <div id="downloadButton" class="button" onclick="downloadToCsv( true ); hideOptions(); savePageState();">Download All Timers to CSV</div> -->
+        <div id="showDownloadButton" class="button" onclick="showDownloadOptions();">Download All Timers to CSV</div>
+        <div id="appendButton" class="button">Append to Existing CSV</div>
         <div id="deleteAllButton" class="button" onclick="deleteAll(); hideOptions(); savePageState();">Delete All Timers and History</div>
+
+        <input type="file" id="userFile" onchange="appendFile(); hideOptions(); savePageState();" />
+
+        <div id="downloadOptions">
+            <div id="downloadButton" class="button" onclick="downloadToCsv(); hideDownloadOptions(); hideOptions(); savePageState();">One-Time Format</div>
+            <div id="downloadButtonAppend" class="button" onclick="downloadToCsv( true ); hideDownloadOptions(); hideOptions(); savePageState();">Append-able Format</div>
+        </div>
 	</div>
 	
 	<div id="timerMain">

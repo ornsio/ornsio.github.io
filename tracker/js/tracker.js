@@ -2,6 +2,8 @@ var timerList = [];
 var freeSlots = [];
 var deletedTimers = [];
 
+var globalOutFileName = "";
+
 var optionsShown = true; // Options window is visible/open
 var confirmReset = true; // Confirm on reset/"stop"
 var confirmClear = true; // Confirm on clear
@@ -654,59 +656,118 @@ function deleteAll() {
 	}
 }
 
-// Download all timer data to a CSV file with the current date
-function downloadToCsv() {
-    var csvText = 'Time,Label,Notes,"Note that multi-line text in Notes may be present, but (in Excel) you need to expand the vertical row size to see it."' + "\n";
+// Show/hide the different download options
+function showDownloadOptions() {
+    document.getElementById( 'downloadOptions' ).style.display = 'block';
+}
+function hideDownloadOptions() {
+    document.getElementById( 'downloadOptions' ).style.display = 'none';
+}
 
-    for ( var i = 0; i < timerList.length; i++ ) {
-        var currentTimer = timerList[i];
-        var thisLine = [];
+// Download all timer data to a CSV file
+function downloadToCsv( isAppendStyle = false ) {
+    var csvText;
 
-        thisLine.push( csvEscape( currentTimer.getTime() ) );
-        thisLine.push( csvEscape( currentTimer.title ) );
-        thisLine.push( csvEscape( currentTimer.notes ) );
-
-        csvText += thisLine.join( ',' ) + "\n";
+    if ( isAppendStyle ) {
+        csvText = parseTimerData( true, true );
+    }
+    else {
+        csvText = 'Time,Label,Notes,"Note that multi-line text in Notes may be present, but (in Excel) you need to expand the vertical row size to see it."' + "\n";
+        csvText += parseTimerData();
+        csvText += "\nTotal Time:," + document.getElementById( 'totalTime' ).innerHTML;
     }
 
-    csvText += "\nTotal Time:," + document.getElementById( 'totalTime' ).innerHTML;
+    saveCsv( csvText );
+}
 
+// Append the current timers to an existing CSV file (have to load and recreate the file since browser JS can't actually do a file append)
+function appendFile() {
+    var file = userFile.files[0];
+    globalOutFileName = file.name;
+    file.text().then( text => parseForAppend( text.split( '\n' ) ) );
+}
+function parseForAppend( textArray ) {
+    textArray.push( parseTimerData( true, false ) );
+    var csvText = textArray.join( "\n" );
+    saveCsv( csvText, globalOutFileName );
+}
+
+// Parse timer data for the CSV output functions
+function parseTimerData( isAppendStyle = false, includeTitleLine = false ) {
+    var timerText = "";
+
+    if ( isAppendStyle ) {
+        var titleLine = [];
+        var thisLine = [];
+
+        var today = new Date();
+        var todayString = String( today.getMonth() + 1 ) + '/' + String( today.getDate() );
+        thisLine.push( csvEscape( todayString ) );
+
+        if ( includeTitleLine ) {
+            titleLine.push( csvEscape( "Date" ) );
+        }
+
+        for ( var i = 0; i < timerList.length; i++ ) {
+            var currentTimer = timerList[i];
+            
+            thisLine.push( csvEscape( currentTimer.getTime() ) );
+            thisLine.push( csvEscape( currentTimer.notes ) );
+
+            if ( includeTitleLine ) {
+                titleLine.push( csvEscape( "Time" ) );
+                titleLine.push( csvEscape( currentTimer.title ) );
+            }
+        }
+
+        if ( includeTitleLine ) {
+            timerText += titleLine.join( ',' ) + "\n";
+        }
+        timerText += thisLine.join( ',' );
+    }
+    else {
+        for ( var i = 0; i < timerList.length; i++ ) {
+            var currentTimer = timerList[i];
+            var thisLine = [];
+    
+            thisLine.push( csvEscape( currentTimer.getTime() ) );
+            thisLine.push( csvEscape( currentTimer.title ) );
+            thisLine.push( csvEscape( currentTimer.notes ) );
+    
+            timerText += thisLine.join( ',' ) + "\n";
+        }
+    }
+
+    return timerText;
+}
+
+// Save the given text to a CSV file
+function saveCsv( csvText, fileName = "" ) {
     var today = new Date();
-
     var tempDownloadAnchor = document.createElement( 'a' );
     tempDownloadAnchor.href = 'data:text/csv;charset=utf-8,' + encodeURI( csvText );
     tempDownloadAnchor.target = '_blank';
-    var fileName = String( today.getMonth() + 1 ).padStart( 2, '0' ) + '-' + String( today.getDate() ).padStart( 2, '0' ) + '.csv';
+
+    if ( fileName == "" ) {
+        fileName = String( today.getMonth() + 1 ).padStart( 2, '0' ) + '-' + String( today.getDate() ).padStart( 2, '0' ) + '.csv';
+    }
+
     tempDownloadAnchor.download = fileName;
     tempDownloadAnchor.click();
 }
 
-// Properly escape a sting for inclusion as a field in a CSV
+// Properly escape a string for inclusion as a field in a CSV
 function csvEscape( input ) {
     var output = input;
 
-    // Note that cells with arithmetic operators (=, +, -, *, /) are quoted because otherwise Excel will think they are formulas
-    if (
-        output.indexOf( ',' ) > -1
-        || output.indexOf( "\r" ) > -1
-        || output.indexOf( "\n" ) > -1
-        || output.indexOf( "\t" ) > -1
-        || output.indexOf( '"' ) > -1
-        || output.indexOf( '=' ) > -1
-        || output.indexOf( '+' ) > -1
-        || output.indexOf( '-' ) > -1
-        || output.indexOf( '*' ) > -1
-        || output.indexOf( '/' ) > -1
-    ) {
-        if ( output.indexOf( '"' ) > -1 ) {
-            output = output.replaceAll( '"','""' );
-        }
-
-        // Even when quoted, Excel still annoyingly thinks a cell starting with a - is a formula...
-        output = output.replace( /(^|\n)-/g, '$1*' );
-
-        output = '"' + output + '"';
+    if ( output.indexOf( '"' ) > -1 ) {
+        output = output.replaceAll( '"','""' );
     }
+
+    // Even when quoted, Excel still annoyingly thinks a cell starting with a - is a formula...
+    output = output.replace( /(^|\n)-/g, '$1*' );
+
+    output = '"' + output + '"';
 
     return output;
 }
