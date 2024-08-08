@@ -10,6 +10,7 @@ var confirmClear = true; // Confirm on clear
 var confirmDelete = true; // Confirm on delete
 var autoStartNewTimer = false; // Automatically start timing new timers
 var onlyAllowOneTiming = false; // Only one timer timing allowed at a time
+var alwaysShowPauseTime = false; // Always show time paused unless actively timing
 
 var deletedTimerCacheSize = 20;
 
@@ -20,6 +21,7 @@ if ( JSON.parse( localStorage.getItem( 'optionsStored' ) ) ) {
     confirmDelete = JSON.parse( localStorage.getItem( 'confirmDelete' ) );
     autoStartNewTimer = JSON.parse( localStorage.getItem( 'autoStartNewTimer' ) );
     onlyAllowOneTiming = JSON.parse( localStorage.getItem( 'onlyAllowOneTiming' ) );
+    alwaysShowPauseTime = JSON.parse( localStorage.getItem( 'alwaysShowPauseTime' ) );
 }
 
 function hideOptions() {
@@ -86,6 +88,13 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         return timeToString( this.totalTime() );
     };
 
+    this.hideInfoBox = function( infoBox ) {
+        // This is called on a delay, so the pause state may have changed
+        if ( !( alwaysShowPauseTime && self.paused ) ) {
+            infoBox.classList.remove( 'timerInfoVisible' );
+        }
+    }
+
     this.start = function() {
         if ( onlyAllowOneTiming ) {
             pauseAll();
@@ -97,7 +106,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
             var thisInfoBox = document.getElementById( 'infoBox'+this.timerId );
             thisInfoBox.innerHTML = 'Timer was paused for ' + timeToString( getNow() - this.lastStart );
             thisInfoBox.classList.add( 'timerInfoVisible' );
-            setTimeout( function() { thisInfoBox.classList.remove( 'timerInfoVisible' ); }, 10000 );
+            setTimeout( function() { self.hideInfoBox( thisInfoBox ); }, 10000 );
         }
         
         this.lastStart = getNow();
@@ -122,6 +131,11 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         document.getElementById( 'timerText'+this.timerId ).classList.remove( 'timerActive' );
         document.getElementById( 'btnPausePlay'+this.timerId ).title = 'Resume';
         document.getElementById( 'btnPausePlay'+this.timerId ).innerHTML = '4';
+
+        if ( alwaysShowPauseTime ) {
+            document.getElementById( 'infoBox'+this.timerId ).classList.add( 'timerInfoVisible' );
+        }
+
         this.refresh();
         this.makeEditable();
         updateTitle();
@@ -155,7 +169,6 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         }
         
         this.savedTime = 0;
-        clearInterval( this.interval );
         document.getElementById( 'timerText'+this.timerId ).classList.remove( 'timerActive' );
         document.getElementById( 'btnPausePlay'+this.timerId ).title = 'Start';
         document.getElementById( 'btnPausePlay'+this.timerId ).innerHTML = '4';
@@ -298,6 +311,11 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
             'click',
             function( evnt ) {
                 var timerRef = evnt.currentTarget.id.substring( 7 );
+
+                if ( !timerList[timerRef].prevSavedTime || !timerList[timerRef].prevLastStart ) {
+                    alert( "There is no previous value to restore for this timer." );
+                    return;
+                }
                 var doIt = confirm( "Do you want to undo the last Reset of this timer?\n\nTimer will be restored to the value it had the last time you reset it, and the current time will be lost." );
 
                 if ( doIt ) {
@@ -460,8 +478,13 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         var infoBox = document.createElement( 'div' );
         infoBox.id = 'infoBox' + this.timerId;
         infoBox.className = 'timerInfo';
-        timerLabel.appendChild( infoBox );
         
+        if ( alwaysShowPauseTime ) {
+            infoBox.classList.add( 'timerInfoVisible' );
+        }
+
+        timerLabel.appendChild( infoBox );
+
         // Create notes cell, append to row
         var timerNotes = document.createElement( 'td' );
         timerNotes.id = 'timerNotes' + this.timerId;
@@ -832,6 +855,7 @@ function initializePage( evnt ) {
     document.getElementById( 'promptDelete' ).checked = confirmDelete;
     document.getElementById( 'autoStart' ).checked = autoStartNewTimer;
     document.getElementById( 'onlyOneRunning' ).checked = onlyAllowOneTiming;
+    document.getElementById( 'alwaysShowPauseTime' ).checked = alwaysShowPauseTime;
 }
 
 // Save the page's current state to browser storage
@@ -857,6 +881,7 @@ function savePageState() {
     localStorage.setItem( 'confirmDelete', JSON.stringify( confirmDelete ) ); // Confirm on delete
     localStorage.setItem( 'autoStartNewTimer', JSON.stringify( autoStartNewTimer ) ); // Automatically start timing new timers
     localStorage.setItem( 'onlyAllowOneTiming', JSON.stringify( onlyAllowOneTiming ) ); // Only one timer timing allowed at a time
+    localStorage.setItem( 'alwaysShowPauseTime', JSON.stringify( alwaysShowPauseTime ) ); // Always show time paused unless actively timing
 }
 
 function getNow() {
