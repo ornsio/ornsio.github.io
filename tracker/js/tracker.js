@@ -83,17 +83,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
     };
 
     this.getTime = function() {
-        var time = this.totalTime();
-        var msec = ('00' + (time % 1000)).slice(-3);
-        time = Math.floor(time / 1000);
-        
-        var sec = ( '0' + (time % 60) ).slice(-2);
-        time = Math.floor(time / 60);
-        
-        var min = ( '0' + (time % 60) ).slice(-2);
-        time = Math.floor(time / 60);
-
-        return time + ':' + min + ':' + sec;
+        return timeToString( this.totalTime() );
     };
 
     this.start = function() {
@@ -104,20 +94,8 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         this.removeEditable();
       
         if ( this.lastStart ) {
-            var now = getNow();
-            var stopTime = now - this.lastStart;
-            
-            var msec = ('00' + (stopTime % 1000)).slice(-3);
-            stopTime = Math.floor(stopTime / 1000);
-            
-            var sec = ( '0' + (stopTime % 60) ).slice(-2);
-            stopTime = Math.floor(stopTime / 60);
-            
-            var min = ( '0' + (stopTime % 60) ).slice(-2);
-            stopTime = Math.floor(stopTime / 60);
-            
             var thisInfoBox = document.getElementById( 'infoBox'+this.timerId );
-            thisInfoBox.innerHTML = 'Timer was paused for ' + stopTime + ':' + min + ':' + sec;
+            thisInfoBox.innerHTML = 'Timer was paused for ' + timeToString( getNow() - this.lastStart );
             thisInfoBox.classList.add( 'timerInfoVisible' );
             setTimeout( function() { thisInfoBox.classList.remove( 'timerInfoVisible' ); }, 10000 );
         }
@@ -189,16 +167,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         if ( !self.paused ) {
             time += getNow() - self.lastStart;
         }
-        var msec = ('00' + (time % 1000)).slice(-3);
-        time = Math.floor(time / 1000);
-        
-        var sec = ( '0' + (time % 60) ).slice(-2);
-        time = Math.floor(time / 60);
-        
-        var min = ( '0' + (time % 60) ).slice(-2);
-        time = Math.floor(time / 60);
-        
-        document.getElementById( 'timerText'+self.timerId ).innerHTML = time + ':' + min + ':' + sec;
+        document.getElementById( 'timerText'+self.timerId ).innerHTML = timeToString( time );
         
         refreshTotal();
     };
@@ -608,17 +577,8 @@ function refreshTotal() {
             totalTime += timerList[i].totalTime();
         }
     }
-    
-    var totalMsec = ('00' + (totalTime % 1000)).slice(-3);
-    totalTime = Math.floor(totalTime / 1000);
-    
-    var totalSec = ( '0' + (totalTime % 60) ).slice(-2);
-    totalTime = Math.floor(totalTime / 60);
-    
-    var totalMin = ( '0' + (totalTime % 60) ).slice(-2);
-    totalTime = Math.floor(totalTime / 60);
-    
-    document.getElementById( 'totalTime' ).innerHTML = totalTime + ':' + totalMin + ':' + totalSec;
+
+    document.getElementById( 'totalTime' ).innerHTML = timeToString( totalTime );
 }
 
 // Update the page title based on the running timers
@@ -892,6 +852,20 @@ function savePageState() {
 
 function getNow() {
     return new Date().valueOf();
+}
+
+function timeToString( timeInt ) {
+    var time = timeInt;
+    var msec = ('00' + (time % 1000)).slice(-3);
+    time = Math.floor(time / 1000);
+    
+    var sec = ( '0' + (time % 60) ).slice(-2);
+    time = Math.floor(time / 60);
+    
+    var min = ( '0' + (time % 60) ).slice(-2);
+    time = Math.floor(time / 60);
+
+    return time + ':' + min + ':' + sec;
 }
 
 // On unload, save the page state
