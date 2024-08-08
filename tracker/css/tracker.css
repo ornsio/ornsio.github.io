@@ -232,10 +232,18 @@ a:hover {
 
 
 .timerText {
-	font-size: 1.15em;
+	font-size: 1.15em !important; /* Keep jquery.editable from overriding this */
     text-align: right;
     width: 71px;
     padding-right: 10px;
+}
+
+/* Override jquery.editable's bizarre styling decisions */
+.timerText textarea {
+    height: 1.15em !important;
+    font-size: 0.95em;
+    width: 71px;
+    margin-top: 2px !important;
 }
 
 .timerActive {
