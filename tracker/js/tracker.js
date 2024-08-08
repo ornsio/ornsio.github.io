@@ -118,7 +118,6 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
     
     this.pause = function() {
         this.saveTime();
-        //clearInterval( this.interval );
         this.paused = true;
         document.getElementById( 'timerText'+this.timerId ).classList.remove( 'timerActive' );
         document.getElementById( 'btnPausePlay'+this.timerId ).title = 'Resume';
@@ -165,16 +164,19 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
     };
     
     this.refresh = function() {
-        var time = self.savedTime;
-        if ( !self.paused ) {
-            time += getNow() - self.lastStart;
-        }
-        document.getElementById( 'timerText'+self.timerId ).innerHTML = timeToString( time );
-        
-        var thisInfoBox = document.getElementById( 'infoBox' + self.timerId );
+        var timerText = document.getElementById( 'timerText' + self.timerId );
+        var infoBox   = document.getElementById( 'infoBox' + self.timerId );
 
-        if ( self.paused && thisInfoBox.classList.contains( "timerInfoVisible" ) ) {
-            thisInfoBox.innerHTML = 'Timer paused for ' + timeToString( getNow() - self.lastStart );
+        if ( !timerText.getAttribute( "data-is-editing" ) ) {
+            var time = self.savedTime;
+            if ( !self.paused ) {
+                time += getNow() - self.lastStart;
+            }
+            timerText.innerHTML = timeToString( time );
+        }
+
+        if ( self.paused && infoBox.classList.contains( "timerInfoVisible" ) ) {
+            infoBox.innerHTML = 'Timer paused for ' + timeToString( getNow() - self.lastStart );
         }
 
         refreshTotal();
@@ -481,7 +483,6 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         );
         timerNotes.appendChild( noteBox );
 
-
         document.getElementById( 'timerTable' ).appendChild( newTimer );
         
         autosize( document.getElementById( 'noteBox' + this.timerId ) );
@@ -500,6 +501,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
             this.makeEditable();
         }
 
+        this.refresh();
         this.interval = setInterval( this.refresh, 1000 );
     };
 };
