@@ -101,7 +101,6 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         }
         
         this.lastStart = getNow();
-        this.interval = setInterval( this.refresh, 1000 );
         this.paused = false;
         document.getElementById( 'timerText'+this.timerId ).classList.add( 'timerActive' );
         document.getElementById( 'btnPausePlay'+this.timerId ).title = 'Pause';
@@ -119,7 +118,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
     
     this.pause = function() {
         this.saveTime();
-        clearInterval( this.interval );
+        //clearInterval( this.interval );
         this.paused = true;
         document.getElementById( 'timerText'+this.timerId ).classList.remove( 'timerActive' );
         document.getElementById( 'btnPausePlay'+this.timerId ).title = 'Resume';
@@ -133,8 +132,10 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         if ( !this.paused ) {
             return;
         }
+        // Make this manual set undo-able
         this.prevLastStart = this.lastStart;
         this.prevSavedTime = this.savedTime;
+
         this.savedTime = timeValue;
     };
 
@@ -146,6 +147,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
             wasRunning = true;
         }
 
+        // Allows undo of this reset
         this.prevLastStart = this.lastStart;
         this.prevSavedTime = this.savedTime;
 
@@ -169,6 +171,12 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         }
         document.getElementById( 'timerText'+self.timerId ).innerHTML = timeToString( time );
         
+        var thisInfoBox = document.getElementById( 'infoBox' + self.timerId );
+
+        if ( self.paused && thisInfoBox.classList.contains( "timerInfoVisible" ) ) {
+            thisInfoBox.innerHTML = 'Timer paused for ' + timeToString( getNow() - self.lastStart );
+        }
+
         refreshTotal();
     };
     
@@ -481,7 +489,6 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         if ( !this.paused ) {
             //this.start(); - can't use this cause it will re-set lastStart, which we don't want when
             //                re-initializing a saved timer from a previous session
-            this.interval = setInterval( this.refresh, 1000 );
             document.getElementById( 'timerText'+this.timerId ).classList.add( 'timerActive' );
             document.getElementById( 'btnPausePlay'+this.timerId ).title = 'Pause';
             document.getElementById( 'btnPausePlay'+this.timerId ).innerHTML = ';';
@@ -493,7 +500,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
             this.makeEditable();
         }
 
-        this.refresh();
+        this.interval = setInterval( this.refresh, 1000 );
     };
 };
 
