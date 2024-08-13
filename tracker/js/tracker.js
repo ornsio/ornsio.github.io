@@ -573,8 +573,9 @@ function undoLastDelete() {
 // Remove the specified timer from the page
 function removeTimer( id, skipUndo ) {
     if ( !timerList[id].paused ) {
-        timerList[id].pause();
+      timerList[id].pause();
     }
+    clearInterval( timerList[id].interval );
 
     if ( !skipUndo ) {
         deletedTimers.push( JSON.parse( JSON.stringify( timerList[id] ) ) );
