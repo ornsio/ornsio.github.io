@@ -188,7 +188,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
             timerText.innerHTML = timeToString( time );
         }
 
-        if ( self.paused && infoBox.classList.contains( "timerInfoVisible" ) ) {
+        if ( self.paused && self.lastStart && infoBox.classList.contains( "timerInfoVisible" ) ) {
             infoBox.innerHTML = 'Timer paused for ' + timeToString( getNow() - self.lastStart );
         }
 
