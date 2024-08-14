@@ -245,7 +245,7 @@ a:hover {
     width: 74px;
     margin-top: 5px !important;
     text-align: right;
-    background-color: white;
+    background-color: white !important;
 }
 
 .timerActive {
