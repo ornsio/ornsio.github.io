@@ -88,10 +88,16 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         return timeToString( this.totalTime() );
     };
 
-    this.hideInfoBox = function( infoBox ) {
+    this.showInfoBox = function() {
+        var infoBox = document.getElementById( 'infoBox' + self.timerId )
+        if ( !infoBox.classList.contains( 'timerInfoVisible' ) ) {
+            infoBox.classList.add( 'timerInfoVisible' );
+        }
+    }
+    this.hideInfoBox = function() {
         // This is called on a delay, so the pause state may have changed
         if ( !( alwaysShowPauseTime && self.paused ) ) {
-            infoBox.classList.remove( 'timerInfoVisible' );
+            document.getElementById( 'infoBox'+self.timerId ).classList.remove( 'timerInfoVisible' );
         }
     }
 
@@ -105,8 +111,8 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         if ( this.lastStart ) {
             var thisInfoBox = document.getElementById( 'infoBox'+this.timerId );
             thisInfoBox.innerHTML = 'Timer was paused for ' + timeToString( getNow() - this.lastStart );
-            thisInfoBox.classList.add( 'timerInfoVisible' );
-            setTimeout( function() { self.hideInfoBox( thisInfoBox ); }, 10000 );
+            this.showInfoBox();
+            setTimeout( function() { self.hideInfoBox(); }, 10000 );
         }
         
         this.lastStart = getNow();
@@ -133,7 +139,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         document.getElementById( 'btnPausePlay'+this.timerId ).innerHTML = '4';
 
         if ( alwaysShowPauseTime ) {
-            document.getElementById( 'infoBox'+this.timerId ).classList.add( 'timerInfoVisible' );
+            this.showInfoBox();
         }
 
         this.refresh();
@@ -651,6 +657,19 @@ function isRunningTimer() {
     return runningTimerFound;
 }
 
+// Update timers to reflect alwaysShowPaused change
+function alwaysShowPauseTimeChanged() {
+    for ( var i = 0; i < timerList.length; i++ ) {
+        if ( timerList[i] instanceof Timer ) {
+            if ( alwaysShowPauseTime && timerList[i].paused ) {
+                timerList[i].showInfoBox();
+            }
+            else {
+                timerList[i].hideInfoBox();
+            }
+        }
+    }
+}
 
 // Pause all running timers
 function pauseAll() {
