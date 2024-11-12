@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="./styles/index.css" />
+
+    <title>PowerShell Cheat Sheet - ornsio</title>
+    <link rel="icon" type="image/png" href="favicon.png" />
+</head>
+
+<body>
+    <div class="container p-4">
+        <div class="container mt-4 text-center">
+            <h1 class="h2">PowerShell Cheat Sheet</h1>
+        </div>
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Useful Tips and Techniques</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="width:45%;"></th>
+                        <th style="width:55%"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">Get-Member</td>
+                        <td><span class="font-monospace">&lt;var or expression&gt; | Get-Member</span> will display properties and methods of the object piped in; If the object represents a collection, will display properties and methods of the collection member types</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Write-Output -NoEnumerate $arrayVar | Get-Member | Format-Table</td>
+                        <td>Since Get-Member "unwraps" arrays and shows you details about their member types, you can use this if you want details about the array itself</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Find-Module -Command X</td>
+                        <td>Find module(s) containing command X</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Get-Module</td>
+                        <td>Lists modules already loaded in current session</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Get-Module -ListAvailable</td>
+                        <td>Lists all modules available for import grouped by the various paths in $env.PSModulePath</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Get-Command<br />
+                        &nbsp;&nbsp;[-Name "*search*"]<br />
+                        &nbsp;&nbsp;[-Module ModName]</td>
+
+                        <td>Search on available cmdlets<br />
+                        &nbsp;&nbsp;Search by command name; * = wildcard<br />
+                        &nbsp;&nbsp;-Module "x" limits output to commands from x</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Get-Help &lt;cmdlet&gt; -Full<br />
+                        &nbsp;&nbsp;-Online</td>
+                        <td>Get full help for cmdlet (must first download)<br />
+                        &nbsp;&nbsp;Open the web doc for the cmdlet instead</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Start-Process powershell -Verb runAs</td>
+                        <td>Start a new PS5 window as the same user with elevated privileges; run on 'pwsh' instead for PS7</td>
+                    </tr>
+                    <tr>
+                        <td>Ctrl + C</td>
+                        <td>Force-exit currently running command or process</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Show-Command Do-Thing</td>
+                        <td>Get an interactive GUI for all args of Do-Thing</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Get-Thing | Grid-View</td>
+                        <td>Get a GUI for examining piped object / output</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Where-Object</td>
+                        <td>Filter collections by member object properties</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$env:PSModulePath</td>
+                        <td>See what paths are being used to access modules</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$env:PSModulePath += ";&lt;path&gt;"</td>
+                        <td>Add a new module path</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$PSVersionTable</td>
+                        <td>Holds current version of PowerShell</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$PSScriptRoot</td>
+                        <td>Holds the directory the current script is in</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$cmd = "C:\doThing.exe" & $cmd -Arg "arg1"</td>
+                        <td>Use the contents of a variable as a command</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$someCollection | Select-Object<br />
+                        &nbsp;&nbsp;-Property SomeProperty<br />
+                        &nbsp;&nbsp;@{ l="CustomPropertyName"; e={$_.Name + $_.Description} }</td>
+                        <td>Select-Object takes piped input object(s) and produces output object(s) with only the specified properties from the input object.<br /><br />
+                        Add custom properties with custom labels by supplying (as an argument to -Property) a hash table with l or label = "property name", and e or expression = script block for calculating the property value</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Add-Member<br />
+                        &nbsp;&nbsp;-InputObject $someObject<br />
+                        &nbsp;&nbsp;-NotePropertyMembers<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;@{<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyBool = $false;<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;MyString = "mine"<br />
+                        &nbsp;&nbsp;&nbsp;&nbsp;}</td>
+                        <td>This works on most objects in PowerShell to add custom properties, because most objects are actually wrapped in a PSObject instance.<br /><br />
+                        EXCEPTION: String literals / variables set to string literals are NOT wrapped in PSObject by default, and Add-Member won't work on them. Instead, use <span class="font-monospace">$str = [PSObject]::AsPSObject( "my string" )</span></td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Test-Path "variable:X"<br />
+                        Test-Path "variable:Local:X"<br />
+                        Test-Path "variable:Script:X"<br />
+                        Test-Path "variable:Global:X"</td>
+                        <td>Check if variable $X is set at any accessible scope<br />
+                        Check if variable $X is set in the Local scope<br />
+                        Check if variable $X is set in the Script scope<br />
+                        Check if variable $X is set in the Global scope</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Write-Host "`rThis message" -NoNewline<br /><br />
+                        Write-Progress ...</td>
+                        <td>`r returns to the beginning of the current line and then the write overwrites existing contents<br /><br />
+                        Achieves a similar goal with less flexibility</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$cred = Get-Credential</td>
+                        <td>Create a credential object via input prompts with the password stored as a secure string</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$cred.GetNetworkCredential()</td>
+                        <td>Get a network credential object from the credential object, which allows you to access the password as plain text if needed</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$cred.Password | ConvertFrom-SecureString</td>
+                        <td>Get encrypted form of password (uses the Windows DPAPI, i.e. will only be decryptable / useable by the same Windows user on the same machine)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">[datetime]::FromFileTime($x)</td>
+                        <td>Convert a Windows file time value in $x (in ticks) to a DateTime object (e.g. the AD attribute msDS-UserPasswordExpiryTimeComputed)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Variables</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">$var = "string value"<br />
+                        $a, $b = 0<br />
+                        $a, $b = "a","b"</td>
+                        <td>Assign variable values in the current scope</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$Script:var = "value"</td>
+                        <td>Assign variable at Script scope</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$Global:var = "value"</td>
+                        <td>Assign variable at Global scope (PS session)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$var = [int]5</td>
+                        <td>Create/assign strongly typed variable</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">"This string has a $var"</td>
+                        <td>Insert the variable value in the resulting string</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">"Index 3 is $($arr[3])"</td>
+                        <td>Insert an expression in a string</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Test-Path "variable:name"</td>
+                        <td>Check if variable <span class="font-monospace">$name</span> has been initialized at any currently accessible scope</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Test-Path "variable:Local:name"</td>
+                        <td>Check if variable <span class="font-monospace">$name</span> has been initialized at the Local scope (i.e. inside a function)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Test-Path "variable:Script:name"</td>
+                        <td>Check if variable <span class="font-monospace">$name</span> has been initialized at the Script scope</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Test-Path "variable:Global:name"</td>
+                        <td>Check if variable <span class="font-monospace">$name</span> has been initialized at the Global scope</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Arrays and Objects</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">$arr = "a", "b", "c"</td>
+                        <td>Create array of three strings</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$arr = 1..10</td>
+                        <td>Create an array with 10 integers, from 1 to 10</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$arr = @()</td>
+                        <td>Create empty array</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$arr[0]; $arr[-1]</td>
+                        <td>Access the first array element; last array element</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$arr[2,5+-3..-1]</td>
+                        <td>Access elements at index 2, 5, and the last three</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$both = $arr1 + $arr2</td>
+                        <td>Append arrays into a single resulting array</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">[PSCustomObject]@{x=1;y=2}</td>
+                        <td>Create custom anonymous object</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Hash Tables / Dictionaries</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">$hash = @{}</td>
+                        <td>Create empty hash table</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$hash = @{ a = 1; x = "blah" }</td>
+                        <td>Create hash table with two key/value pairs</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$hash["a"] = 4</td>
+                        <td>Get/set/add a hash table value</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$hash.Remove( "a" )</td>
+                        <td>Remove key/value pair from hash table</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Basic Terms and Syntax</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>cmdlet</td>
+                        <td>Command built into PowerShell written in .NET</td>
+                    </tr>
+                    <tr>
+                        <td>function</td>
+                        <td>Command written in PowerShell scripting language</td>
+                    </tr>
+                    <tr>
+                        <td>Script</td>
+                        <td>Executable (typically) PowerShell file; extension: .ps1</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">`t, `n</td>
+                        <td>Tab, Newline (<span class="font-monospace">`</span> = escape character, line continuation character)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace"># Comment</td>
+                        <td>Line comment</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">&lt;# Comment<br />#&gt;</td>
+                        <td>Multi-line comment</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Some-Command > out.txt</td>
+                        <td>Shortcut for piping to the Out-File command</td>
+                    </tr>
+                    <tr>
+                        <td><span class="font-monospace">$_</span> or <span class="font-monospace">$PSItem</span></td>
+                        <td>Variable automatically populated from pipeline input.<br /><br />
+                        Example use: <span class="font-monospace">$myArray | ForEach-Object { Write-Host $_.Name }</span> iterates over each element in <span class="font-monospace">$myArray</span> and writes the <span class="font-monospace">Name</span> property of each one to the console.</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Do-It -Do:$true</td>
+                        <td>Explicitly pass true/false to a command switch</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="text-center">You can use parenthetical subexpressions, e.g. <span class="font-monospace">Do-Thing -Arg1 (Get-Arg -SubArg)</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Operators</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">-and, -or, -not, !</td>
+                        <td>Boolean operators</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">-eq, -ne, -gt, -ge, -lt, -le</td>
+                        <td>Comparison operators<br />
+                        NOTE: All string comparisons are case <b>in</b>sensitive by default</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">-replace</td>
+                        <td>Substring replacement, e.g.:<br />
+                        &nbsp;&nbsp;<span class="font-monospace">"Funk" -replace "F","St"</span><br />
+                        &nbsp;&nbsp;returns <span class="font-monospace">Stunk</span><br />
+                        Works with regex syntax, including match group refs</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">-like, -notlike</td>
+                        <td>Wildcard matching (* = multiple, ? = one), e.g.:<br />
+                        &nbsp;&nbsp;<span class="font-monospace">"Flunk" -like "*u?k"</span><br />
+                        &nbsp;&nbsp;returns <span class="font-monospace">True</span></td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">-contains, -notcontains<br />
+                        -in, -notin</td>
+                        <td>Check if a value is in an array, e.g.:<br />
+                        &nbsp;&nbsp;<span class="font-monospace">$temp = "a","b","c"</span><br />
+                        &nbsp;&nbsp;<span class="font-monospace">$temp -contains "b"</span><br />
+                        &nbsp;&nbsp;returns <span class="font-monospace">True</span><br />
+                        &nbsp;&nbsp;<span class="font-monospace">"b" -in $temp</span><br />
+                        &nbsp;&nbsp;returns <span class="font-monospace">True</span></td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">-match, -notmatch</td>
+                        <td>Regular expression matching, e.g.:<br />
+                        &nbsp;&nbsp;<span class="font-monospace">"Funk" -match "^F[ui]n.$"</span><br />
+                        &nbsp;&nbsp;returns <span class="font-monospace">True</span><br />
+                        Populates <span class="font-monospace">$Matches</span> with match info in the form of a hash table indexed by the match group numbers (0 = the full match)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Flow Control</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">if( ) {...}; elseif( ) {...}; else {...}</td>
+                        <td class="font-monospace">while() {...}; 1..10 | foreach{ $_ }</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">for( $i=0; $i -lt 10; $i++ ) {...}</td>
+                        <td class="font-monospace">foreach( $item in $var ) {...}</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">exit # exit script, even if in a function</td>
+                        <td class="font-monospace">throw "Manually thrown exception"</td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="font-monospace">$name = Get-Content Env:\COMPUTERNAME<br />
+                        Switch -Wildcard ( $name ) { "Comp*" { Write "starts with Comp"; break; }<br />
+                        Default { Write "Doesn't"; } }</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">try { Do-Thing -ErrorAction Stop -ErrorVariable $e}<br />
+                        catch { Write-Host $e }<br />
+                        finally { ... }</td>
+                        <td>Try code, stop if error, store error details in $e<br />
+                        If error occurs, run catch block with access to $e<br />
+                        Run finally block whether or not error occurs</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Scripting Basics</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">[CmdletBinding()]<br />
+                        param(<br />
+                        &nbsp;&nbsp;[Parameter(Mandatory=$True)]<br />
+                        &nbsp;&nbsp;[string] $ComputerName,<br />
+                        &nbsp;&nbsp;[int] $DriveType = 3,<br />
+                        &nbsp;&nbsp;[switch] $IsSwitched<br />
+                        &nbsp;&nbsp;[ValidateSet( "Test", "Prod" )]<br />
+                        &nbsp;&nbsp;[string] $Environment,<br />
+                        )</td>
+                        <td>Add parameters to a .ps1 script<br />
+                        Parameters with no default will prompt user<br />
+                        Makes the parameter required<br />
+                        String parameter with no default value<br />
+                        Int parameter with a default value<br />
+                        Switch; check with $IsSwitched.IsPresent<br />
+                        ValidateSet creates an enum-like parameter<br />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">&lt;#<br />
+                        .SYNOPSIS<br />
+                        Does a thing.<br />
+                        .DESCRIPTION<br />
+                        Here's more about the thing.<br />
+                        .PARAMETER ParamOne<br />
+                        This parameter does something.<br />
+                        .PARAMETER ParamTwo<br />
+                        This one does something else.<br />
+                        .EXAMPLE<br />
+                        .\Get-Thing -ParamOne localhost<br />
+                        #&gt;
+                        </td>
+                        <td>Syntax for adding help to a script (put it at the top)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">function PSVerb-Noun { ... }</td>
+                        <td>Create a function within a script;<br />
+                        To add args or help, use the same syntaxes as above within the function block</td>
+                    </tr>
+                    <tr>
+                        <td>To make your script a module...</td>
+                        <td>Make sure it has one or more functions, put it here:<br />
+                        (for Windows PowerShell)<br />
+                        &nbsp;&nbsp;C:\Users\&lt;you&gt;\Documents\WindowsPowerShell\&lt;your module&gt;\</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Get-Help *function*</td>
+                        <td>Doc for available features for functions</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">pwsh.exe -Command & ".\script.ps1" -Arg1 blah</td>
+                        <td>Run a script with arguments from the PowerShell executable (use in Win tasks; if pwsh.exe is not in PATH, have to specify the full path to the executable in quotes)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Script Debugging</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">Write-Verbose</td>
+                        <td>Used for output only displayed in verbose mode; script must be executed with -Verbose switch</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Write-Debug</td>
+                        <td>Outputs debug message and pauses script execution; script must be executed with -Debug</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Script User Interaction</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">Write-Host "message"<br />
+                        &nbsp;&nbsp;-ForegroundColor Red<br />
+                        &nbsp;&nbsp;-NoNewLine</td>
+                        <td>Print output to PowerShell console<br />
+                        &nbsp;&nbsp;Set text color<br />
+                        &nbsp;&nbsp;Remove default line break at the end of output<br /></td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$thing = Read-Host "Enter something"<br />
+                        &nbsp;&nbsp;-AsSecureString</td>
+                        <td>Print a prompt to console and get user input<br />
+                        &nbsp;&nbsp;Read as a secure string</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Do-Thing -Confirm</td>
+                        <td>Force the executing host to manually confirm execution of <span class="font-monospace">Do-Thing</span> within the script</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Do-Thing -Confirm:$false</td>
+                        <td>Override a confirm-by-default command</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Default Arguments</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">-Verbose, -Debug</td>
+                        <td>See Script Debugging section</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">-ErrorAction [Continue | SilentlyContinue | Inquire | Stop]</td>
+                        <td>Set error handling behavior; alias -EA</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Jobs</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">Start-Job -ScriptBlock { ... }</td>
+                        <td>Starts a background job; results are tied to the current PS session (close it, and you lose results)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Get-Job</td>
+                        <td>Shows all jobs tied to the current session
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Wait-Job</td>
+                        <td>Wait for one or more session jobs to complete
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">Receive-Job<br />
+                        &nbsp;&nbsp;-Id 3<br />
+                        &nbsp;&nbsp;-Keep<br />
+                        &nbsp;&nbsp;-Wait</td>
+                        <td>Load results for a background job<br />
+                        &nbsp;&nbsp;Specifies the Job ID of the job you want<br />
+                        &nbsp;&nbsp;Keeps results in memory to Receive-Job again<br />
+                        &nbsp;&nbsp;Bring the job to the foreground session</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Misc. Commands of Note</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Export-Csv</td>
+                        <td>Import-Csv</td>
+                        <td>Where-Object</td>
+                    </tr>
+                    <tr>
+                        <td>Set-Location</td>
+                        <td>Get-Content</td>
+                        <td>Copy-Item</td>
+                    </tr>
+                    <tr>
+                        <td>Remove-Item</td>
+                        <td>New-Item</td>
+                        <td>Invoke-Item</td>
+                    </tr>
+                    <tr>
+                        <td>Invoke-WebRequest</td>
+                        <td>Get-PSDrive</td>
+                        <td>Get-ChildItem</td>
+                    </tr>
+                    <tr>
+                        <td>Import-Module</td>
+                        <td>Compare-Object</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <!-- SECTION TEMPLATE:
+        <div class="container mt-5 text-center">
+            <h1 class="h5">SectionTitle</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+        -->
+
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    </div>
+</body>
+
+</html>
