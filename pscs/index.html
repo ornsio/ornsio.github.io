@@ -125,16 +125,6 @@
                         EXCEPTION: String literals / variables set to string literals are NOT wrapped in PSObject by default, and Add-Member won't work on them. Instead, use <span class="font-monospace">$str = [PSObject]::AsPSObject( "my string" )</span></td>
                     </tr>
                     <tr>
-                        <td class="font-monospace">Test-Path "variable:X"<br />
-                        Test-Path "variable:Local:X"<br />
-                        Test-Path "variable:Script:X"<br />
-                        Test-Path "variable:Global:X"</td>
-                        <td>Check if variable $X is set at any accessible scope<br />
-                        Check if variable $X is set in the Local scope<br />
-                        Check if variable $X is set in the Script scope<br />
-                        Check if variable $X is set in the Global scope</td>
-                    </tr>
-                    <tr>
                         <td class="font-monospace">Write-Host "`rThis message" -NoNewline<br /><br />
                         Write-Progress ...</td>
                         <td>`r returns to the beginning of the current line and then the write overwrites existing contents<br /><br />
@@ -263,6 +253,18 @@
                     <tr>
                         <td class="font-monospace">[PSCustomObject]@{x=1;y=2}</td>
                         <td>Create custom anonymous object</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">$a = 1,2,3,4; $b = 1,4,5,6<br />
+                        $a + $b | Select-Object -Unique<br />
+                        $a | Where-Object { $b -contains $_ }<br />
+                        $a | Where-Object { $b -notcontains $_ }<br />
+                        $b | Where-Object { $a -notcontains $_ }</td>
+                        <td>List comparison operations:<br />
+                        Union<br />
+                        Intersection<br />
+                        Difference (a - b)<br />
+                        Difference (b - a)</td>
                     </tr>
                 </tbody>
             </table>
@@ -540,7 +542,7 @@
 
 
         <div class="container mt-5 text-center">
-            <h1 class="h5">Script Debugging</h1>
+            <h1 class="h5">Script Debugging and User Interaction</h1>
         </div>
 
         <div class="table-responsive">
@@ -560,25 +562,6 @@
                         <td class="font-monospace">Write-Debug</td>
                         <td>Outputs debug message and pauses script execution; script must be executed with -Debug</td>
                     </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-
-        <div class="container mt-5 text-center">
-            <h1 class="h5">Script User Interaction</h1>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
                     <tr>
                         <td class="font-monospace">Write-Host "message"<br />
                         &nbsp;&nbsp;-ForegroundColor Red<br />
@@ -600,33 +583,6 @@
                     <tr>
                         <td class="font-monospace">Do-Thing -Confirm:$false</td>
                         <td>Override a confirm-by-default command</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-
-        <div class="container mt-5 text-center">
-            <h1 class="h5">Default Arguments</h1>
-        </div>
-
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td class="font-monospace">-Verbose, -Debug</td>
-                        <td>See Script Debugging section</td>
-                    </tr>
-                    <tr>
-                        <td class="font-monospace">-ErrorAction [Continue | SilentlyContinue | Inquire | Stop]</td>
-                        <td>Set error handling behavior; alias -EA</td>
                     </tr>
                 </tbody>
             </table>
@@ -693,29 +649,72 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Export-Csv</td>
-                        <td>Import-Csv</td>
-                        <td>Where-Object</td>
+                        <td class="font-monospace">Export-Csv</td>
+                        <td class="font-monospace">Import-Csv</td>
+                        <td class="font-monospace">Where-Object</td>
                     </tr>
                     <tr>
-                        <td>Set-Location</td>
-                        <td>Get-Content</td>
-                        <td>Copy-Item</td>
+                        <td class="font-monospace">Set-Location</td>
+                        <td class="font-monospace">Get-Content</td>
+                        <td class="font-monospace">Copy-Item</td>
                     </tr>
                     <tr>
-                        <td>Remove-Item</td>
-                        <td>New-Item</td>
-                        <td>Invoke-Item</td>
+                        <td class="font-monospace">Remove-Item</td>
+                        <td class="font-monospace">New-Item</td>
+                        <td class="font-monospace">Invoke-Item</td>
                     </tr>
                     <tr>
-                        <td>Invoke-WebRequest</td>
-                        <td>Get-PSDrive</td>
-                        <td>Get-ChildItem</td>
+                        <td class="font-monospace">Invoke-WebRequest</td>
+                        <td class="font-monospace">Get-PSDrive</td>
+                        <td class="font-monospace">Get-ChildItem</td>
                     </tr>
                     <tr>
-                        <td>Import-Module</td>
-                        <td>Compare-Object</td>
-                        <td></td>
+                        <td class="font-monospace">Import-Module</td>
+                        <td class="font-monospace">Compare-Object</td>
+                        <td class="font-monospace"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+
+        <div class="container mt-5 text-center">
+            <h1 class="h5">Aliases</h1>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="font-monospace">%</td>
+                        <td class="font-monospace">ForEach-Object</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">?</td>
+                        <td class="font-monospace">Where-Object</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">ft</td>
+                        <td class="font-monospace">Format-Table</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">ipmo</td>
+                        <td class="font-monospace">Import-Module</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">select</td>
+                        <td class="font-monospace">Select-Object</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">-EA</td>
+                        <td class="font-monospace">-ErrorAction</td>
                     </tr>
                 </tbody>
             </table>
@@ -737,7 +736,10 @@
                     </tr>
                 </thead>
                 <tbody>
-
+                    <tr>
+                        <td class="font-monospace"></td>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
