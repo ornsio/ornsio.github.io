@@ -345,7 +345,7 @@
                         <td>Multi-line comment</td>
                     </tr>
                     <tr>
-                        <td class="font-monospace">Some-Command > out.txt</td>
+                        <td class="font-monospace">Some&#8209;Command&nbsp;>&nbsp;out.txt&nbsp;&nbsp;&nbsp;</td>
                         <td>Shortcut for piping to the Out-File command</td>
                     </tr>
                     <tr>
@@ -356,6 +356,12 @@
                     <tr>
                         <td class="font-monospace">Do-It -Do:$true</td>
                         <td>Explicitly pass true/false to a command switch</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">--%</td>
+                        <td>Signals to PowerShell to stop parsing input on the rest of the line as PowerShell.  Useful if you're having trouble with PowerShell interfering when doing things like running an .exe with its own input argument syntax.<br /><br />
+                        Example:<br />
+                        <span class="font-monospace">& myExe.exe --% /arg "valueWithDolla$ignsOrSomething"</span></td>
                     </tr>
                     <tr>
                         <td colspan="2" class="text-center">You can use parenthetical subexpressions, e.g. <span class="font-monospace">Do-Thing -Arg1 (Get-Arg -SubArg)</span></td>
