@@ -143,8 +143,12 @@
                         <td>Get encrypted form of password (uses the Windows DPAPI, i.e. will only be decryptable / useable by the same Windows user on the same machine)</td>
                     </tr>
                     <tr>
-                        <td class="font-monospace">[datetime]::FromFileTime($x)</td>
+                        <td class="font-monospace">[DateTime]::FromFileTime($x)</td>
                         <td>Convert a Windows file time value in $x (in ticks) to a DateTime object (e.g. the AD attribute msDS-UserPasswordExpiryTimeComputed)</td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">[Array]::BinarySearch( $SortedArray, $ValueToSearchFor )</td>
+                        <td>Performs a binary search on a sorted array of unique values and returns the index of the value if it's found, or -1 if it's not found.  Performs much more efficiently on large lists than using <span class="font-monospace">&#8209;contains</span> and related operators.</td>
                     </tr>
                 </tbody>
             </table>
