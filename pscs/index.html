@@ -399,13 +399,6 @@
                         NOTE: All string comparisons are case <b>in</b>sensitive by default</td>
                     </tr>
                     <tr>
-                        <td class="font-monospace">-replace</td>
-                        <td>Substring replacement, e.g.:<br />
-                        &nbsp;&nbsp;<span class="font-monospace">"Funk" -replace "F","St"</span><br />
-                        &nbsp;&nbsp;returns <span class="font-monospace">Stunk</span><br />
-                        Works with regex syntax, including match group refs</td>
-                    </tr>
-                    <tr>
                         <td class="font-monospace">-like, -notlike</td>
                         <td>Wildcard matching (* = multiple, ? = one), e.g.:<br />
                         &nbsp;&nbsp;<span class="font-monospace">"Flunk" -like "*u?k"</span><br />
@@ -426,7 +419,15 @@
                         <td>Regular expression matching, e.g.:<br />
                         &nbsp;&nbsp;<span class="font-monospace">"Funk" -match "^F[ui]n.$"</span><br />
                         &nbsp;&nbsp;returns <span class="font-monospace">True</span><br />
-                        Populates <span class="font-monospace">$Matches</span> with match info in the form of a hash table indexed by the match group numbers (0 = the full match)</td>
+                        Populates <span class="font-monospace">$Matches</span> with match info in the form of a hash table indexed by the capturing groups (0 = the full match)<br />
+                        For any capturing groups that are matched multiple times, only the last match is included in <span class="font-monospace">$Matches</span></td>
+                    </tr>
+                    <tr>
+                        <td class="font-monospace">-replace</td>
+                        <td>Substring replacement, e.g.:<br />
+                        &nbsp;&nbsp;<span class="font-monospace">"Funk" -replace "F","St"</span><br />
+                        &nbsp;&nbsp;returns <span class="font-monospace">Stunk</span><br />
+                        Works with regex syntax, including match group refs</td>
                     </tr>
                 </tbody>
             </table>
