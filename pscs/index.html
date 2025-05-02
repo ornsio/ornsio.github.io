@@ -358,8 +358,12 @@
                         Example use: <span class="font-monospace">$myArray | ForEach-Object { Write-Host $_.Name }</span> iterates over each element in <span class="font-monospace">$myArray</span> and writes the <span class="font-monospace">Name</span> property of each one to the console.</td>
                     </tr>
                     <tr>
+                        <td><span class="font-monospace">$?</span></td>
+                        <td>Variable automatically populated with a boolean whose value depends on the success (true) or failure (false) of the last statement</td>
+                    </tr>
+                    <tr>
                         <td class="font-monospace">Do-It -Do:$true</td>
-                        <td>Explicitly pass true/false to a command switch</td>
+                        <td>Explicitly pass true/false to a command switch; useful for when the value for the switch is determined by a variable in your script</td>
                     </tr>
                     <tr>
                         <td class="font-monospace">--%</td>
