@@ -164,8 +164,8 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th></th>
-                        <th></th>
+                        <th style="width:30%;"></th>
+                        <th style="width:70%"></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -201,7 +201,7 @@
                     </tr>
                     <tr>
                         <td class="font-monospace">Test-Path "variable:Local:name"</td>
-                        <td>Check if variable <span class="font-monospace">$name</span> has been initialized at the Local scope (i.e. inside a function)</td>
+                        <td>Check if variable <span class="font-monospace">$name</span> has been initialized at the Local (i.e. current scope).  For example, inside a function this will test for variables that have been initialized in the function, but at the main PowerShell prompt it is identical to checking the Global scope.<br /><br />Note that inside a function, the function arguments are always initialized at the local scope with the default values for their types, even if they weren't specified in the call to the function and don't have an explicit default value defined in the function (this logic can be used to see this).</td>
                     </tr>
                     <tr>
                         <td class="font-monospace">Test-Path "variable:Script:name"</td>
