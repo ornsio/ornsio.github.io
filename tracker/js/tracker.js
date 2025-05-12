@@ -13,6 +13,7 @@ var onlyAllowOneTiming = false; // Only one timer timing allowed at a time
 var alwaysShowPauseTime = false; // Always show time paused unless actively timing
 
 var deletedTimerCacheSize = 20;
+var maxPauseTime = 432000000; // 5 days
 
 if ( JSON.parse( localStorage.getItem( 'optionsStored' ) ) ) {
     optionsShown = JSON.parse( localStorage.getItem( 'optionsShown' ) );
@@ -22,6 +23,7 @@ if ( JSON.parse( localStorage.getItem( 'optionsStored' ) ) ) {
     autoStartNewTimer = JSON.parse( localStorage.getItem( 'autoStartNewTimer' ) );
     onlyAllowOneTiming = JSON.parse( localStorage.getItem( 'onlyAllowOneTiming' ) );
     alwaysShowPauseTime = JSON.parse( localStorage.getItem( 'alwaysShowPauseTime' ) );
+    maxPauseTime = JSON.parse( localStorage.getItem( 'maxPauseTime' ) );
 }
 
 function hideOptions() {
@@ -96,7 +98,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
     }
     this.hideInfoBox = function() {
         // This is called on a delay, so the pause state may have changed
-        if ( !( alwaysShowPauseTime && self.paused ) ) {
+        if ( !( alwaysShowPauseTime && self.paused && getNow() - self.lastStart < maxPauseTime ) ) {
             document.getElementById( 'infoBox'+self.timerId ).classList.remove( 'timerInfoVisible' );
         }
     }
@@ -109,8 +111,14 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         this.removeEditable();
       
         if ( this.lastStart ) {
-            var thisInfoBox = document.getElementById( 'infoBox'+this.timerId );
-            thisInfoBox.innerHTML = 'Timer was paused for ' + timeToString( getNow() - this.lastStart );
+            var thisInfoBox = document.getElementById( 'infoBox' + this.timerId );
+            const amount = getNow() - this.lastStart;
+            if ( amount > maxPauseTime ) {
+                thisInfoBox.innerHTML = 'Timer was paused for a long time.';
+            }
+            else {
+                thisInfoBox.innerHTML = 'Timer was paused for ' + timeToString( amount );
+            }
             this.showInfoBox();
             setTimeout( function() { self.hideInfoBox(); }, 10000 );
         }
@@ -195,7 +203,14 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
         }
 
         if ( self.paused && self.lastStart && infoBox.classList.contains( "timerInfoVisible" ) ) {
-            infoBox.innerHTML = 'Timer paused for ' + timeToString( getNow() - self.lastStart );
+            const amount = getNow() - self.lastStart;
+            if ( amount > maxPauseTime ) {
+                infoBox.innerHTML = 'Timer paused for a long time.';
+                self.hideInfoBox();
+            }
+            else {
+                infoBox.innerHTML = 'Timer paused for ' + timeToString( amount );
+            }
         }
 
         refreshTotal();
@@ -876,6 +891,7 @@ function initializePage( evnt ) {
     document.getElementById( 'autoStart' ).checked = autoStartNewTimer;
     document.getElementById( 'onlyOneRunning' ).checked = onlyAllowOneTiming;
     document.getElementById( 'alwaysShowPauseTime' ).checked = alwaysShowPauseTime;
+    document.getElementById( 'maxPauseTime' ).value = maxPauseTime / 3600000; // Convert millisceonds to hours
 }
 
 // Save the page's current state to browser storage
@@ -902,6 +918,7 @@ function savePageState() {
     localStorage.setItem( 'autoStartNewTimer', JSON.stringify( autoStartNewTimer ) ); // Automatically start timing new timers
     localStorage.setItem( 'onlyAllowOneTiming', JSON.stringify( onlyAllowOneTiming ) ); // Only one timer timing allowed at a time
     localStorage.setItem( 'alwaysShowPauseTime', JSON.stringify( alwaysShowPauseTime ) ); // Always show time paused unless actively timing
+    localStorage.setItem( 'maxPauseTime', JSON.stringify( maxPauseTime ) ); // Max pause time to display in milliseconds before switching to generic message
 }
 
 function getNow() {
