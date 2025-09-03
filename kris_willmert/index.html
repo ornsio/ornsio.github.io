@@ -12,7 +12,7 @@
     <div class="container p-5">
         <div class="container mt-3">
             <div class="text-center mb-3 print-hide">
-                <img class="img-fluid rounded-circle" src="./images/MeReal.png" />
+                <img class="img-fluid rounded-circle" src="./images/MeReal.jpg" />
             </div>
             <h1 class="h1 text-center">Kristopher K. Willmert</h1>
             <p class="text-center my-0 screen-hide" id="item1"></p>
@@ -28,7 +28,7 @@
                 <div class="accordion-item print-no-border">
                     <div class="accordion-body">
                         <div class="container">
-                            I am an enthusiastic software developer with over a decade of experience in higher ed. I am skilled at writing, maintaining, and refactoring organized, efficient, and readable code, as well as clearly communicating complex technical concepts to non-technical clients. I love to learn and apply new technologies through both training and hands-on experience. In my personal life, I love to serve and connect with people at my local church, spend time with family, pursue nerdy hobbies, and drink quality coffees.
+                            I am an enthusiastic software developer, technical analyst, and system administrator with more than 15 years of experience in higher ed. I am skilled at writing, maintaining, and refactoring organized, efficient, and readable code, as well as clearly communicating complex technical concepts to non-technical clients. I love to learn and apply new technologies through both training and hands-on experience. In my personal life, I love to serve and connect with people at my local church, spend time with family, pursue nerdy hobbies, drink quality coffees, and try new craft beers and ciders.
                         </div>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
             <div class="accordion" id="experienceAccordian">
                 <div class="accordion-item print-no-border" id="exp5">
                     <div class="accordion-header no-pagebreak" id="expHeader5">
-                        <div class="accordion-button collapsed" id="expButton5" type="button" data-bs-toggle="collapse" data-bs-target="#expContent5" aria-expanded="true" aria-controls="expContent5">
+                        <div class="accordion-button" id="expButton5" type="button" data-bs-toggle="collapse" data-bs-target="#expContent5" aria-expanded="true" aria-controls="expContent5">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
                                     <div class="col-lg-5 fs-6 print-bold">Senior Technology Executive</div>
@@ -52,17 +52,29 @@
                             </div>
                         </div>
                     </div>
-                    <div id="expContent5" class="accordion-collapse collapse" aria-labelledby="expHeader5" data-bs-parent="#experienceAccordian">
+                    <div id="expContent5" class="accordion-collapse collapse show" aria-labelledby="expHeader5" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
-                                <li>Achievements forthcoming!</li>
+                                <li>Created a PowerShell based framework for data ETL automations including configurable mechanisms for logging and log retention policies, and sending alert emails when automations fail. Implemented it at multiple client institutions to substantially improve visibility, reliability, and sustainability of critical automated business processes.</li>
+                                <li class="mt-2">Designed and delivered a solution for automating a client's calculation of faculty instructional load and adjunct faculty pay that honors their unique policies, provides no-code configurability for future policy changes, and is built on functionality fully supported by their SIS/ERP software.
+                                    <ul>
+                                        <li class="mt1 fst-italic">"Kris has really helped us make the system work for us and not us work for the system.  His adjustments in the system have been a game-changer for us."</li>
+                                    </ul>
+                                </li>
+                                <li class="mt-2">After being with CampusWorks for just over a year (August 2024), was peer-nominated as an exemplar of three of the company's <a href="https://www.campusworksinc.com/approach/#guiding-principles" target="_blank">guiding principles</a>:
+                                    <ul>
+                                        <li class="mt1">Our people and results distinguish us.</li>
+                                        <li class="mt1">If it is good for the client, it is good for CampusWorks.</li>
+                                        <li class="mt1">We stop, think, and then go.</li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="accordion-item print-no-border" id="exp4">
                     <div class="accordion-header no-pagebreak" id="expHeader4">
-                        <div class="accordion-button" id="expButton4" type="button" data-bs-toggle="collapse" data-bs-target="#expContent4" aria-expanded="true" aria-controls="expContent4">
+                        <div class="accordion-button collapsed" id="expButton4" type="button" data-bs-toggle="collapse" data-bs-target="#expContent4" aria-expanded="false" aria-controls="expContent4">
                             <div class="container w-100 text-uppercase">
                                 <div class="row">
                                     <div class="col-lg-5 fs-6 print-bold">Salesforce Technical Director</div>
@@ -72,7 +84,7 @@
                             </div>
                         </div>
                     </div>
-                    <div id="expContent4" class="accordion-collapse collapse show" aria-labelledby="expHeader4" data-bs-parent="#experienceAccordian">
+                    <div id="expContent4" class="accordion-collapse collapse" aria-labelledby="expHeader4" data-bs-parent="#experienceAccordian">
                         <div class="accordion-body">
                             <ul class="lh-base">
                                 <li>Rapidly addressed multiple data corruption issues caused by uncaught bugs in IWU's third-party-developed IPaaS code immediately after launch, using SOQL to target affected data and Salesforce Dataloader to perform corrective bulk updates in Salesforce, and T-SQL scripting to correct data in the Colleague SIS.</li>
@@ -136,7 +148,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="accordion-item print-no-border   d-none   " id="exp1">
+                <!-- <div class="accordion-item print-no-border" id="exp1">
                     <div class="accordion-header no-pagebreak" id="expHeader1">
                         <div class="accordion-button collapsed" id="expButton1" type="button" data-bs-toggle="collapse" data-bs-target="#expContent1" aria-expanded="false" aria-controls="expContent1">
                             <div class="container w-100 text-uppercase">
@@ -157,7 +169,7 @@
                             </ul>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -252,13 +264,33 @@
                         <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#endContent3" aria-expanded="true" aria-controls="endContent3">
                             <div class="container w-100">
                                 <div class="row">
+                                    <div class="col-3 col-md-2 col-lg-1 fs-6 print-hide"><img src="./images/Jeff.jpg" class="img-fluid rounded-circle"></div>
+                                    <div class="col-8 col-lg-8 fs-6"><span class="print-bold">Jeff Gunn</span><br /><span class="text-muted">Director of Software Development, Indiana Wesleyan University</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="endContent3" class="accordion-collapse collapse" aria-labelledby="endHeader3" data-bs-parent="#endorsementAccordion">
+                        <div class="accordion-body">
+                            <div class="container small fst-italic">
+                                <p>&#8220;During Kris' tenure at IWU, I had the privilege of serving as his supervisor. Kris consistently demonstrated a rare combination of technical brilliance, collaborative spirit, and forward-thinking vision that elevated our entire team's performance. His ability to navigate complex technical challenges while maintaining a positive, solution-oriented mindset made him not only an invaluable technical resource but also an inspiring presence that strengthened our team culture.&#8221;</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="accordion-item print-no-border">
+                    <div class="accordion-header no-pagebreak" id="endHeader2">
+                        <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#endContent2" aria-expanded="true" aria-controls="endContent2">
+                            <div class="container w-100">
+                                <div class="row">
                                     <div class="col-3 col-md-2 col-lg-1 fs-6 print-hide"><img src="./images/Sue.jpg" class="img-fluid rounded-circle"></div>
                                     <div class="col-8 col-lg-8 fs-6"><span class="print-bold">Sue Melton</span><br /><span class="text-muted">VP, Office of Student Services, Indiana Wesleyan University (retired)</span></div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div id="endContent3" class="accordion-collapse collapse" aria-labelledby="endHeader3" data-bs-parent="#endorsementAccordion">
+                    <div id="endContent2" class="accordion-collapse collapse" aria-labelledby="endHeader2" data-bs-parent="#endorsementAccordion">
                         <div class="accordion-body">
                             <div class="container small fst-italic">
                                 <p>&#8220;It has been my privilege to work with Kris for many years in my Vice President role at Indiana Wesleyan University.  Kris developed a comprehensive package for us that allowed us to evaluate academic standing on a continuous basis, complete with rules, communications, and documentation.  Not only was this a customization to our system, but it was set up in a way for the user to be able to configure as needed in the future without IT assistance.</p>
@@ -268,7 +300,7 @@
                     </div>
                 </div>
 
-                <div class="accordion-item print-no-border">
+                <!-- <div class="accordion-item print-no-border">
                     <div class="accordion-header no-pagebreak" id="endHeader2">
                         <div class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#endContent2" aria-expanded="true" aria-controls="endContent2">
                             <div class="container w-100">
@@ -287,7 +319,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="accordion-item print-no-border">
                     <div class="accordion-header no-pagebreak" id="endHeader1">
@@ -295,7 +327,7 @@
                             <div class="container w-100">
                                 <div class="row">
                                     <div class="col-3 col-md-2 col-lg-1 fs-6 print-hide"><img src="./images/Sarah.jfif" class="img-fluid rounded-circle"></div>
-                                    <div class="col-8 col-lg-8 fs-6"><span class="print-bold">Sarah Flanagin</span>, ACBA, CSM<br /><span class="text-muted">Project Manager and Business Analyst, SFlanagin &amp; Associates, LLC</span><br /><a class="text-decoration-none print-hide" href="https://www.linkedin.com/in/sarah-flanagin/" target="_blank"><img class="d-inline-block position-relative" style="top:-2px;" src="./images/linkedin.svg" height="18" alt="Sarah's LinkedIn" /></a></div>
+                                    <div class="col-8 col-lg-8 fs-6"><span class="print-bold">Sarah Flanagin</span><br /><span class="text-muted">Project Manager and Business Analyst</span><br /><a class="text-decoration-none print-hide" href="https://www.linkedin.com/in/sarah-flanagin/" target="_blank"><img class="d-inline-block position-relative" style="top:-2px;" src="./images/linkedin.svg" height="18" alt="Sarah's LinkedIn" /></a></div>
                                 </div>
                             </div>
                         </div>
