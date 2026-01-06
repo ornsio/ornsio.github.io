@@ -435,8 +435,12 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
                 
                 if ( doIt ) {
                     timerList[timerRef].reset();
+
                     timerList[timerRef].notes = '';
-                    document.getElementById( 'noteBox' + timerRef ).value = '';
+                    var thisNoteBox = document.getElementById( 'noteBox' + timerRef );
+                    thisNoteBox.value = '';
+                    autosize.update( thisNoteBox );
+
                     savePageState();
                 }
             },
