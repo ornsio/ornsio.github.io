@@ -426,7 +426,7 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
                 
                 if ( !timerList[timerRef].paused || timerList[timerRef].savedTime > 0 || timerList[timerRef].title != 'New Timer' || timerList[timerRef].notes != '' ) {
                     if ( confirmClear ) {
-                        doIt = confirm( "Do you really want to clear timer " + timerList[timerRef].title + "?\n\nCurrent time, title, and notes will all be lost!" );
+                        doIt = confirm( "Do you really want to clear timer " + timerList[timerRef].title + "?\n\nCurrent time and notes will be lost!" );
                     }
                     else {
                         doIt = true;
@@ -435,8 +435,6 @@ function Timer( id, lastStartIn, savedTimeIn, pausedIn, titleIn, notesIn, prevLa
                 
                 if ( doIt ) {
                     timerList[timerRef].reset();
-                    timerList[timerRef].title = 'New Timer';
-                    document.getElementById( 'titleBox' + timerRef ).value = 'New Timer';
                     timerList[timerRef].notes = '';
                     document.getElementById( 'noteBox' + timerRef ).value = '';
                     savePageState();
