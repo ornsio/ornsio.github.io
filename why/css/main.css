@@ -1,3 +1,15 @@
 sup > a {
     text-decoration: none;
 }
+
+@media (max-width: 768px) {
+    .accordion-button {
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+
+    .accordion-body {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+}
