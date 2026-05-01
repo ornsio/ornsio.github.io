@@ -1,5 +1,5 @@
-sup > a {
-    text-decoration: none;
+sup > span {
+    color: #0077BB;
 }
 
 @media (max-width: 768px) {
