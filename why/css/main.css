@@ -1,5 +1,6 @@
-sup > span {
+.tooltipped {
     color: #0077BB;
+    cursor: pointer;
 }
 
 @media (max-width: 768px) {
