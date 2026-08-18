@@ -23,7 +23,22 @@
     }
     .accordion-button:not(.collapsed) {
         color: unset !important;
+        background-color: unset !important;
         box-shadow: none !important;
+    }
+    .p-5 {
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+    .container {
+        max-width: unset;
+    }
+    .accordion-button::after {
+        display: none !important;
+    }
+    a {
+        color: unset !important;
+        text-decoration: none !important;
     }
 }
 @media screen {
